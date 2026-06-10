@@ -47,8 +47,8 @@ const getMailTransporter = async () => {
 
   return nodemailer.createTransport({
     host: process.env.SMTP_HOST || 'smtp.gmail.com',
-    port: parseInt(process.env.SMTP_PORT) || 465,
-    secure: process.env.SMTP_SECURE !== 'false',
+    port: parseInt(process.env.SMTP_PORT) || 587,
+    secure: process.env.SMTP_SECURE === 'true', // port 587 uses STARTTLS (secure: false)
     auth: {
       user,
       pass
