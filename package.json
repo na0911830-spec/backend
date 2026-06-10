@@ -1,0 +1,19 @@
+{
+  "name": "gcx-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node index.js"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "nodemailer": "^8.0.10",
+    "pg": "^8.11.5",
+    "ws": "^8.21.0"
+  }
+}
