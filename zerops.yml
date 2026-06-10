@@ -34,7 +34,7 @@ zerops:
       # what ports your app listens on
       # and whether it supports http traffic
       ports:
-        - port: 7860
+        - port: 5001
           httpSupport: true
 
       # how to start your application
