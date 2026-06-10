@@ -5,7 +5,7 @@ import crypto from 'crypto';
 import { db } from './db.js';
 
 const app = express();
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 7860;
 
 // Middleware
 app.use(cors());
@@ -644,7 +644,7 @@ app.put('/api/appeals/:id', authenticateAdmin, async (req, res) => {
         let statusBadgeBorder = 'rgba(14, 165, 233, 0.2)';
         let statusEmoji = 'ℹ️';
         let statusTextColor = '#0ea5e9';
-        
+
         if (status === 'Resolved') {
           themeColor = '#059669'; // Emerald Green
           statusBadgeBg = 'rgba(5, 150, 105, 0.06)';
