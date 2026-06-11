@@ -113,26 +113,16 @@ app.post('/api/auth/send-otp', async (req, res) => {
   <title>GCX Staff Verification Access Code</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Unbounded:wght@700;900&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
 </head>
-<body style="margin: 0; padding: 0; background-color: #f8fafc; background-image: radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.02) 1px, transparent 1px); background-size: 20px 20px; font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; -webkit-font-smoothing: antialiased; color: #334155;">
+<body style="margin: 0; padding: 0; background-color: #09090a; font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; -webkit-font-smoothing: antialiased; color: #e4e4e7;">
   <table width="100%" border="0" cellspacing="0" cellpadding="0" style="padding: 40px 20px;">
     <tr>
       <td align="center">
-        <!-- Floating Navbar Pill -->
-        <table border="0" cellspacing="0" cellpadding="0" style="background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(15, 23, 42, 0.08); border-radius: 9999px; box-shadow: 0 4px 20px rgba(15, 23, 42, 0.02); margin-bottom: 25px;">
-          <tr>
-            <td style="padding: 10px 24px; text-align: center; vertical-align: middle;">
-              <span style="display: inline-block; vertical-align: middle; width: 10px; height: 10px; background: linear-gradient(135deg, #00d2ff 0%, #0ea5e9 100%); border-radius: 50%; margin-right: 8px;"></span>
-              <span style="font-family: 'Unbounded', 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 15px; font-weight: 800; color: #0f172a; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle;">GCX</span>
-            </td>
-          </tr>
-        </table>
-
         <!-- Main Card Container -->
-        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="max-width: 560px; width: 100%; background: #ffffff; border-radius: 24px; border: 1px solid rgba(15, 23, 42, 0.08); box-shadow: 0 20px 40px rgba(15, 23, 42, 0.03); overflow: hidden;">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="max-width: 560px; width: 100%; background: #121214; border-radius: 24px; border: 1px solid rgba(240, 203, 135, 0.12); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5); overflow: hidden;">
           
-          <!-- Colored Accent Line (matches website gradient brand) -->
+          <!-- Colored Accent Line (matches website flat brand color) -->
           <tr>
-            <td height="6" style="background: linear-gradient(90deg, #00d2ff 0%, #00f2fe 30%, #0ea5e9 70%, #6366f1 100%); line-height: 6px; font-size: 0px;">&nbsp;</td>
+            <td height="6" style="background: #f0cb87; line-height: 6px; font-size: 0px;">&nbsp;</td>
           </tr>
 
           <!-- Content Wrapper -->
@@ -142,36 +132,36 @@ app.post('/api/auth/send-otp', async (req, res) => {
               <!-- Greeting & Header -->
               <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 24px;">
                 <tr>
-                  <td align="left" style="font-family: 'Unbounded', 'Plus Jakarta Sans', -apple-system, sans-serif; color: #0f172a; font-size: 20px; font-weight: 700; padding-bottom: 12px;">
+                  <td align="left" style="font-family: 'Unbounded', 'Plus Jakarta Sans', -apple-system, sans-serif; color: #f0cb87; font-size: 20px; font-weight: 700; padding-bottom: 12px;">
                     Staff Authorization
                   </td>
                 </tr>
                 <tr>
-                  <td align="left" style="color: #64748b; font-size: 14px; line-height: 1.6; font-weight: 400;">
-                    A secure authentication request was detected for the <strong style="color: #0f172a;">GCX Administrative Console</strong>. Please verify your identity by entering the one-time passcode (OTP) displayed below:
+                  <td align="left" style="color: #a1a1aa; font-size: 14px; line-height: 1.6; font-weight: 400;">
+                    A secure authentication request was detected for the <strong style="color: #f4f4f5;">GCX Administrative Console</strong>. Please verify your identity by entering the one-time passcode (OTP) displayed below:
                   </td>
                 </tr>
               </table>
 
               <!-- OTP Code Display Box -->
-              <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background: #f8fafc; border: 1.5px dashed rgba(14, 165, 233, 0.3); border-radius: 16px; margin-bottom: 28px;">
+              <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background: #16161a; border: 1.5px dashed rgba(240, 203, 135, 0.3); border-radius: 16px; margin-bottom: 28px;">
                 <tr>
                   <td align="center" style="padding: 24px 20px;">
-                    <div style="font-family: 'Space Mono', 'Courier New', Courier, monospace; font-size: 44px; font-weight: 700; letter-spacing: 12px; color: #0ea5e9; margin-left: 12px; line-height: 1;">
+                    <div style="font-family: 'Space Mono', 'Courier New', Courier, monospace; font-size: 44px; font-weight: 700; letter-spacing: 12px; color: #f0cb87; margin-left: 12px; line-height: 1;">
                       ${otp}
                     </div>
-                    <div style="font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 2px; margin-top: 10px;">
+                    <div style="font-size: 10px; font-weight: 700; color: #71717a; text-transform: uppercase; letter-spacing: 2px; margin-top: 10px;">
                       One-Time Passcode
                     </div>
                   </td>
                 </tr>
               </table>
 
-              <!-- CTA Button (styled like GCX home page secondary pill - light blue background, clean border, text) -->
+              <!-- CTA Button (styled like GCX home page secondary pill - solid sand gold, text) -->
               <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 30px;">
                 <tr>
                   <td align="center">
-                    <a href="http://localhost:5173/internal/staff/admin" target="_blank" style="display: inline-block; padding: 12px 32px; background-color: rgba(14, 165, 233, 0.06); border: 1.5px solid rgba(14, 165, 233, 0.25); border-radius: 9999px; color: #0ea5e9; text-decoration: none; font-size: 13px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; transition: all 0.3s ease;">
+                    <a href="http://localhost:5173/internal/staff/admin" target="_blank" style="display: inline-block; padding: 12px 32px; background-color: #f0cb87; border: 1.5px solid #f0cb87; border-radius: 9999px; color: #0b0b0c; text-decoration: none; font-size: 13px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; transition: all 0.3s ease;">
                       Launch Administrative Console
                     </a>
                   </td>
@@ -181,28 +171,28 @@ app.post('/api/auth/send-otp', async (req, res) => {
               <!-- Metadata Log Details -->
               <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 24px;">
                 <tr>
-                  <td align="left" style="color: #475569; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding-bottom: 10px;">
+                  <td align="left" style="color: #94a3b8; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding-bottom: 10px;">
                     🔒 Security Log Info
                   </td>
                 </tr>
                 <tr>
                   <td>
-                    <table width="100%" border="0" cellspacing="0" cellpadding="8" style="background-color: #f8fafc; border: 1px solid rgba(15, 23, 42, 0.06); border-radius: 12px; font-size: 13px; color: #64748b;">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="8" style="background-color: #16161a; border: 1px solid rgba(240, 203, 135, 0.08); border-radius: 12px; font-size: 13px; color: #a1a1aa;">
                       <tr>
-                        <td style="padding: 8px 12px; border-bottom: 1px solid rgba(15, 23, 42, 0.04); font-weight: 600; width: 140px;">IP Address</td>
-                        <td style="padding: 8px 12px; border-bottom: 1px solid rgba(15, 23, 42, 0.04); color: #0f172a; font-family: 'Space Mono', monospace; font-weight: bold;">${clientIp}</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid rgba(240, 203, 135, 0.05); font-weight: 600; width: 140px;">IP Address</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid rgba(240, 203, 135, 0.05); color: #f4f4f5; font-family: 'Space Mono', monospace; font-weight: bold;">${clientIp}</td>
                       </tr>
                       <tr>
-                        <td style="padding: 8px 12px; border-bottom: 1px solid rgba(15, 23, 42, 0.04); font-weight: 600;">Operating System</td>
-                        <td style="padding: 8px 12px; border-bottom: 1px solid rgba(15, 23, 42, 0.04); color: #0f172a;">${userAgentInfo.os}</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid rgba(240, 203, 135, 0.05); font-weight: 600;">Operating System</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid rgba(240, 203, 135, 0.05); color: #f4f4f5;">${userAgentInfo.os}</td>
                       </tr>
                       <tr>
-                        <td style="padding: 8px 12px; border-bottom: 1px solid rgba(15, 23, 42, 0.04); font-weight: 600;">Browser</td>
-                        <td style="padding: 8px 12px; border-bottom: 1px solid rgba(15, 23, 42, 0.04); color: #0f172a;">${userAgentInfo.browser}</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid rgba(240, 203, 135, 0.05); font-weight: 600;">Browser</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid rgba(240, 203, 135, 0.05); color: #f4f4f5;">${userAgentInfo.browser}</td>
                       </tr>
                       <tr>
                         <td style="padding: 8px 12px; font-weight: 600;">Timestamp</td>
-                        <td style="padding: 8px 12px; color: #0f172a; font-family: 'Space Mono', monospace; font-size: 12px;">${timestamp}</td>
+                        <td style="padding: 8px 12px; color: #f4f4f5; font-family: 'Space Mono', monospace; font-size: 12px;">${timestamp}</td>
                       </tr>
                     </table>
                   </td>
@@ -213,9 +203,9 @@ app.post('/api/auth/send-otp', async (req, res) => {
               <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 30px;">
                 <tr>
                   <td>
-                    <table width="100%" border="0" cellspacing="0" cellpadding="12" style="background-color: rgba(220, 38, 38, 0.04); border: 1px solid rgba(220, 38, 38, 0.15); border-radius: 12px;">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="12" style="background-color: rgba(239, 68, 68, 0.04); border: 1px solid rgba(239, 68, 68, 0.15); border-radius: 12px;">
                       <tr>
-                        <td align="left" style="color: #dc2626; font-size: 12px; line-height: 1.6; font-weight: 400;">
+                        <td align="left" style="color: #ef4444; font-size: 12px; line-height: 1.6; font-weight: 400;">
                           <strong style="font-weight: 700;">Important Security Notice:</strong> This passcode is valid for a single session and expires in 1 hour. Do not share this passcode with anyone. GCX will never ask for your authentication codes.
                         </td>
                       </tr>
@@ -225,11 +215,11 @@ app.post('/api/auth/send-otp', async (req, res) => {
               </table>
 
               <!-- Signature -->
-              <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-top: 1px solid rgba(15, 23, 42, 0.08); padding-top: 20px;">
+              <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-top: 1px solid rgba(240, 203, 135, 0.08); padding-top: 20px;">
                 <tr>
-                  <td align="left" style="color: #94a3b8; font-size: 13px; line-height: 1.5;">
+                  <td align="left" style="color: #71717a; font-size: 13px; line-height: 1.5;">
                     Best regards,<br>
-                    <strong style="color: #64748b;">GCX Security</strong>
+                    <strong style="color: #a1a1aa;">GCX Security</strong>
                   </td>
                 </tr>
               </table>
@@ -237,25 +227,25 @@ app.post('/api/auth/send-otp', async (req, res) => {
             </td>
           </tr>
 
-          <!-- Footer Block matching main website footer in light mode -->
+          <!-- Footer Block matching main website footer in dark mode -->
           <tr>
-            <td align="center" style="background: #f8fafc; padding: 30px 40px; border-top: 1px solid rgba(15, 23, 42, 0.08);">
+            <td align="center" style="background: #0d0d0f; padding: 30px 40px; border-top: 1px solid rgba(240, 203, 135, 0.08);">
               <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                   <td align="center" style="padding-bottom: 12px;">
-                    <span style="font-family: 'Unbounded', 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 13px; font-weight: 700; color: #0f172a; letter-spacing: 0.5px;">GCX</span>
-                    <span style="font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 12px; color: #64748b; margin-left: 4px;">· Gift Card Exchange</span>
+                    <span style="font-family: 'Unbounded', 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 13px; font-weight: 700; color: #f0cb87; letter-spacing: 0.5px;">GCX</span>
+                    <span style="font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 12px; color: #71717a; margin-left: 4px;">· Gift Card Exchange</span>
                   </td>
                 </tr>
                 <tr>
                   <td align="center" style="padding-bottom: 12px;">
-                    <a href="http://localhost:5173/privacy" style="font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 12px; font-weight: 500; color: #64748b; text-decoration: none; margin: 0 10px;">Privacy</a>
-                    <a href="http://localhost:5173/terms" style="font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 12px; font-weight: 500; color: #64748b; text-decoration: none; margin: 0 10px;">Terms</a>
-                    <a href="http://localhost:5173/support" style="font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 12px; font-weight: 500; color: #64748b; text-decoration: none; margin: 0 10px;">Support</a>
+                    <a href="http://localhost:5173/privacy" style="font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 12px; font-weight: 500; color: #a1a1aa; text-decoration: none; margin: 0 10px;">Privacy</a>
+                    <a href="http://localhost:5173/terms" style="font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 12px; font-weight: 500; color: #a1a1aa; text-decoration: none; margin: 0 10px;">Terms</a>
+                    <a href="http://localhost:5173/support" style="font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 12px; font-weight: 500; color: #a1a1aa; text-decoration: none; margin: 0 10px;">Support</a>
                   </td>
                 </tr>
                 <tr>
-                  <td align="center" style="font-size: 11px; color: #94a3b8; line-height: 1.5;">
+                  <td align="center" style="font-size: 11px; color: #71717a; line-height: 1.5;">
                     This is an automated operational transmission. Replies to this mailbox are unmonitored.<br>
                     &copy; 2026 GCX. All rights reserved.
                   </td>
@@ -615,6 +605,169 @@ app.post('/api/appeals', async (req, res) => {
   }
   try {
     const appeal = await db.createAppeal(name, phone, card_type, email, payout_address, details);
+
+    // Send notification email to admin
+    try {
+      const transporter = await getMailTransporter();
+      if (transporter) {
+        const adminMailOptions = {
+          from: '"GCX Security Operations" <giftcardexchange.gcx@gmail.com>',
+          to: 'veltrix620@gmail.com',
+          subject: `🚨 New Appeal Submitted: #${appeal.id}`,
+          text: `A new appeal (ID: ${appeal.id}) has been submitted by ${name} (${email}) for card: ${card_type}.\nPayout Address: ${payout_address}\nDetails: ${details || 'No additional details provided.'}`,
+          html: `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Appeal Submitted</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Unbounded:wght@700;900&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+</head>
+<body style="margin: 0; padding: 0; background-color: #09090a; font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; -webkit-font-smoothing: antialiased; color: #e4e4e7;">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" style="padding: 40px 20px;">
+    <tr>
+      <td align="center">
+        <!-- Main Card Container -->
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="max-width: 560px; width: 100%; background: #121214; border-radius: 24px; border: 1px solid rgba(240, 203, 135, 0.12); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5); overflow: hidden;">
+          
+          <!-- Colored Accent Line -->
+          <tr>
+            <td height="6" style="background: #f0cb87; line-height: 6px; font-size: 0px;">&nbsp;</td>
+          </tr>
+
+          <!-- Content Wrapper -->
+          <tr>
+            <td style="padding: 40px 40px 30px 40px;">
+              
+              <!-- Greeting & Header -->
+              <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 24px;">
+                <tr>
+                  <td align="left" style="font-family: 'Unbounded', 'Plus Jakarta Sans', -apple-system, sans-serif; color: #f0cb87; font-size: 20px; font-weight: 700; padding-bottom: 12px;">
+                    New Appeal Filed
+                  </td>
+                </tr>
+                <tr>
+                  <td align="left" style="color: #a1a1aa; font-size: 14px; line-height: 1.6; font-weight: 400;">
+                    A new payout appeal has been submitted to the GCX system and requires staff review.
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Ticket Details Table -->
+              <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 15px; margin-bottom: 24px;">
+                <tr>
+                  <td align="left" style="color: #94a3b8; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding-bottom: 10px;">
+                    📋 Appeal Details
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <table width="100%" border="0" cellspacing="0" cellpadding="8" style="background-color: #16161a; border: 1px solid rgba(240, 203, 135, 0.08); border-radius: 12px; font-size: 13px; color: #a1a1aa;">
+                      <tr>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid rgba(240, 203, 135, 0.05); font-weight: 600; width: 140px;">Appeal Ticket ID</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid rgba(240, 203, 135, 0.05); color: #f4f4f5; font-family: 'Space Mono', monospace; font-weight: bold;">#${appeal.id}</td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid rgba(240, 203, 135, 0.05); font-weight: 600;">User Name</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid rgba(240, 203, 135, 0.05); color: #f4f4f5;">${name}</td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid rgba(240, 203, 135, 0.05); font-weight: 600;">User Email</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid rgba(240, 203, 135, 0.05); color: #f4f4f5;">${email}</td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid rgba(240, 203, 135, 0.05); font-weight: 600;">Phone Number</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid rgba(240, 203, 135, 0.05); color: #f4f4f5;">${phone}</td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid rgba(240, 203, 135, 0.05); font-weight: 600;">Gift Card Brand</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid rgba(240, 203, 135, 0.05); color: #f4f4f5;">${card_type}</td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid rgba(240, 203, 135, 0.05); font-weight: 600;">Payout Address</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid rgba(240, 203, 135, 0.05); color: #f4f4f5; font-family: 'Space Mono', monospace; font-size: 11px;">${payout_address}</td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 8px 12px; font-weight: 600;">Submission Date</td>
+                        <td style="padding: 8px 12px; color: #f4f4f5; font-family: 'Space Mono', monospace; font-size: 12px;">${new Date(appeal.created_at).toUTCString()}</td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- User Explanation Details Card -->
+              <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 15px; margin-bottom: 24px;">
+                <tr>
+                  <td style="color: #94a3b8; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding-bottom: 10px; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;">
+                    📝 User Statement & Details
+                  </td>
+                </tr>
+                <tr>
+                  <td style="background-color: #16161a; border: 1px solid rgba(240, 203, 135, 0.08); border-left: 4px solid #f0cb87; border-radius: 12px; padding: 16px; color: #e4e4e7; font-size: 13.5px; line-height: 1.6; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;">
+                    \${details || 'No additional details provided by the user.'}
+                  </td>
+                </tr>
+              </table>
+
+              <!-- CTA Button to Admin Portal -->
+              <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 30px;">
+                <tr>
+                  <td align="center">
+                    <a href="http://localhost:5173/internal/staff/admin" target="_blank" style="display: inline-block; padding: 12px 32px; background-color: #f0cb87; border: 1.5px solid #f0cb87; border-radius: 9999px; color: #0b0b0c; text-decoration: none; font-size: 13px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; transition: all 0.3s ease;">
+                      Open Admin Portal
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Signature -->
+              <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-top: 1px solid rgba(240, 203, 135, 0.08); padding-top: 20px;">
+                <tr>
+                  <td align="left" style="color: #71717a; font-size: 13px; line-height: 1.5;">
+                    Best regards,<br>
+                    <strong style="color: #a1a1aa;">GCX Security System</strong>
+                  </td>
+                </tr>
+              </table>
+
+            </td>
+          </tr>
+
+          <!-- Footer Block -->
+          <tr>
+            <td align="center" style="background: #0d0d0f; padding: 30px 40px; border-top: 1px solid rgba(240, 203, 135, 0.08);">
+              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td align="center" style="padding-bottom: 12px;">
+                    <span style="font-family: 'Unbounded', 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 13px; font-weight: 700; color: #f0cb87; letter-spacing: 0.5px;">GCX</span>
+                    <span style="font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 12px; color: #71717a; margin-left: 4px;">· Gift Card Exchange</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="center" style="font-size: 11px; color: #71717a; line-height: 1.5;">
+                    This is an automated operational alert regarding appeal ticket #${appeal.id}.<br>
+                    &copy; 2026 GCX. All rights reserved.
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`
+        };
+        await transporter.sendMail(adminMailOptions);
+        console.log(`[APPEAL SUBMIT] Alert email sent to admin (veltrix620@gmail.com) for new appeal ID: ${appeal.id}`);
+      }
+    } catch (mailErr) {
+      console.error("[APPEAL SUBMIT] Failed to send admin alert email:", mailErr);
+    }
+
     res.status(211).json(appeal);
   } catch (err) {
     console.error(err);
@@ -639,22 +792,23 @@ app.put('/api/appeals/:id', authenticateAdmin, async (req, res) => {
     try {
       const transporter = await getMailTransporter();
       if (transporter && appeal.email) {
-        // Choose colors and theme based on         let themeColor = '#0ea5e9'; // Blue for Under Investigation, etc.
-        let statusBadgeBg = 'rgba(14, 165, 233, 0.06)';
-        let statusBadgeBorder = 'rgba(14, 165, 233, 0.2)';
+        // Choose colors and theme based on status
+        let themeColor = '#f0cb87'; // Sand Gold for Under Investigation, etc.
+        let statusBadgeBg = 'rgba(240, 203, 135, 0.06)';
+        let statusBadgeBorder = 'rgba(240, 203, 135, 0.2)';
         let statusEmoji = 'ℹ️';
-        let statusTextColor = '#0ea5e9';
+        let statusTextColor = '#f0cb87';
 
         if (status === 'Resolved') {
           themeColor = '#059669'; // Emerald Green
-          statusBadgeBg = 'rgba(5, 150, 105, 0.06)';
-          statusBadgeBorder = 'rgba(5, 150, 105, 0.2)';
+          statusBadgeBg = 'rgba(5, 150, 105, 0.05)';
+          statusBadgeBorder = 'rgba(5, 150, 105, 0.15)';
           statusEmoji = '✅';
           statusTextColor = '#059669';
         } else if (status === 'Rejected') {
           themeColor = '#dc2626'; // Rose Red
-          statusBadgeBg = 'rgba(220, 38, 38, 0.06)';
-          statusBadgeBorder = 'rgba(220, 38, 38, 0.2)';
+          statusBadgeBg = 'rgba(220, 38, 38, 0.05)';
+          statusBadgeBorder = 'rgba(220, 38, 38, 0.15)';
           statusEmoji = '🚫';
           statusTextColor = '#dc2626';
         }
@@ -665,12 +819,12 @@ app.put('/api/appeals/:id', authenticateAdmin, async (req, res) => {
           detailsHtml = `
             <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 15px; margin-bottom: 24px;">
               <tr>
-                <td style="color: #475569; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding-bottom: 10px; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;">
+                <td style="color: #94a3b8; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding-bottom: 10px; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;">
                   🔍 Findings & Explanations
                 </td>
               </tr>
               <tr>
-                <td style="background-color: #f8fafc; border: 1px solid rgba(15, 23, 42, 0.06); border-left: 4px solid #059669; border-radius: 12px; padding: 16px; color: #334155; font-size: 13.5px; line-height: 1.6; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;">
+                <td style="background-color: #16161a; border: 1px solid rgba(240, 203, 135, 0.08); border-left: 4px solid #059669; border-radius: 12px; padding: 16px; color: #e4e4e7; font-size: 13.5px; line-height: 1.6; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;">
                   \${adminNotes || 'We identified a processing mistake on your ticket and it has been corrected.'}
                 </td>
               </tr>
@@ -680,12 +834,12 @@ app.put('/api/appeals/:id', authenticateAdmin, async (req, res) => {
           detailsHtml = `
             <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 15px; margin-bottom: 24px;">
               <tr>
-                <td style="color: #475569; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding-bottom: 10px; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;">
+                <td style="color: #94a3b8; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding-bottom: 10px; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;">
                   📝 Reason for Rejection
                 </td>
               </tr>
               <tr>
-                <td style="background-color: #f8fafc; border: 1px solid rgba(15, 23, 42, 0.06); border-left: 4px solid #dc2626; border-radius: 12px; padding: 16px; color: #334155; font-size: 13.5px; line-height: 1.6; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;">
+                <td style="background-color: #16161a; border: 1px solid rgba(240, 203, 135, 0.08); border-left: 4px solid #dc2626; border-radius: 12px; padding: 16px; color: #e4e4e7; font-size: 13.5px; line-height: 1.6; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;">
                   \${adminNotes || 'The details provided could not be verified or did not meet the requirements.'}
                 </td>
               </tr>
@@ -706,22 +860,12 @@ app.put('/api/appeals/:id', authenticateAdmin, async (req, res) => {
   <title>GCX Appeal Status Update</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Unbounded:wght@700;900&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
 </head>
-<body style="margin: 0; padding: 0; background-color: #f8fafc; background-image: radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.02) 1px, transparent 1px); background-size: 20px 20px; font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; -webkit-font-smoothing: antialiased; color: #334155;">
+<body style="margin: 0; padding: 0; background-color: #09090a; font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; -webkit-font-smoothing: antialiased; color: #e4e4e7;">
   <table width="100%" border="0" cellspacing="0" cellpadding="0" style="padding: 40px 20px;">
     <tr>
       <td align="center">
-        <!-- Floating Navbar Pill -->
-        <table border="0" cellspacing="0" cellpadding="0" style="background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(15, 23, 42, 0.08); border-radius: 9999px; box-shadow: 0 4px 20px rgba(15, 23, 42, 0.02); margin-bottom: 25px;">
-          <tr>
-            <td style="padding: 10px 24px; text-align: center; vertical-align: middle;">
-              <span style="display: inline-block; vertical-align: middle; width: 10px; height: 10px; background: linear-gradient(135deg, #00d2ff 0%, #0ea5e9 100%); border-radius: 50%; margin-right: 8px;"></span>
-              <span style="font-family: 'Unbounded', 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 15px; font-weight: 800; color: #0f172a; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle;">GCX</span>
-            </td>
-          </tr>
-        </table>
-
         <!-- Main Card Container -->
-        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="max-width: 560px; width: 100%; background: #ffffff; border-radius: 24px; border: 1px solid rgba(15, 23, 42, 0.08); box-shadow: 0 20px 40px rgba(15, 23, 42, 0.03); overflow: hidden;">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="max-width: 560px; width: 100%; background: #121214; border-radius: 24px; border: 1px solid rgba(240, 203, 135, 0.12); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5); overflow: hidden;">
           
           <!-- Colored Accent Line (matches status color dynamically) -->
           <tr>
@@ -735,17 +879,17 @@ app.put('/api/appeals/:id', authenticateAdmin, async (req, res) => {
               <!-- Greeting & Header -->
               <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 24px;">
                 <tr>
-                  <td align="left" style="font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 14px; font-weight: 600; color: #64748b; padding-bottom: 4px;">
+                  <td align="left" style="font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 14px; font-weight: 600; color: #a1a1aa; padding-bottom: 4px;">
                     Dear ${appeal.name},
                   </td>
                 </tr>
                 <tr>
-                  <td align="left" style="font-family: 'Unbounded', 'Plus Jakarta Sans', -apple-system, sans-serif; color: #0f172a; font-size: 20px; font-weight: 700; padding-bottom: 12px;">
+                  <td align="left" style="font-family: 'Unbounded', 'Plus Jakarta Sans', -apple-system, sans-serif; color: #f0cb87; font-size: 20px; font-weight: 700; padding-bottom: 12px;">
                     Appeal Update
                   </td>
                 </tr>
                 <tr>
-                  <td align="left" style="color: #64748b; font-size: 14px; line-height: 1.6; font-weight: 400;">
+                  <td align="left" style="color: #a1a1aa; font-size: 14px; line-height: 1.6; font-weight: 400;">
                     We are writing to inform you that the status of your payout appeal has been updated by our staff security operations.
                   </td>
                 </tr>
@@ -755,7 +899,7 @@ app.put('/api/appeals/:id', authenticateAdmin, async (req, res) => {
               <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background: ${statusBadgeBg}; border: 1.5px solid ${statusBadgeBorder}; border-radius: 16px; margin-bottom: 24px;">
                 <tr>
                   <td align="center" style="padding: 20px 20px;">
-                    <div style="font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px;">
+                    <div style="font-size: 10px; font-weight: 700; color: #71717a; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px;">
                       Current Appeal Status
                     </div>
                     <div style="font-family: 'Unbounded', 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 18px; font-weight: 800; color: ${statusTextColor}; letter-spacing: 0.5px; text-transform: uppercase;">
@@ -771,28 +915,28 @@ app.put('/api/appeals/:id', authenticateAdmin, async (req, res) => {
               <!-- Ticket Details Table -->
               <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 15px; margin-bottom: 24px;">
                 <tr>
-                  <td align="left" style="color: #475569; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding-bottom: 10px;">
+                  <td align="left" style="color: #94a3b8; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding-bottom: 10px;">
                     📋 Ticket Details
                   </td>
                 </tr>
                 <tr>
                   <td>
-                    <table width="100%" border="0" cellspacing="0" cellpadding="8" style="background-color: #f8fafc; border: 1px solid rgba(15, 23, 42, 0.06); border-radius: 12px; font-size: 13px; color: #64748b;">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="8" style="background-color: #16161a; border: 1px solid rgba(240, 203, 135, 0.08); border-radius: 12px; font-size: 13px; color: #a1a1aa;">
                       <tr>
-                        <td style="padding: 8px 12px; border-bottom: 1px solid rgba(15, 23, 42, 0.04); font-weight: 600; width: 140px;">Appeal Ticket ID</td>
-                        <td style="padding: 8px 12px; border-bottom: 1px solid rgba(15, 23, 42, 0.04); color: #0f172a; font-family: 'Space Mono', monospace; font-weight: bold;">#${appeal.id}</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid rgba(240, 203, 135, 0.05); font-weight: 600; width: 140px;">Appeal Ticket ID</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid rgba(240, 203, 135, 0.05); color: #f4f4f5; font-family: 'Space Mono', monospace; font-weight: bold;">#${appeal.id}</td>
                       </tr>
                       <tr>
-                        <td style="padding: 8px 12px; border-bottom: 1px solid rgba(15, 23, 42, 0.04); font-weight: 600;">Gift Card Brand</td>
-                        <td style="padding: 8px 12px; border-bottom: 1px solid rgba(15, 23, 42, 0.04); color: #0f172a;">${appeal.card_type}</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid rgba(240, 203, 135, 0.05); font-weight: 600;">Gift Card Brand</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid rgba(240, 203, 135, 0.05); color: #f4f4f5;">${appeal.card_type}</td>
                       </tr>
                       <tr>
-                        <td style="padding: 8px 12px; border-bottom: 1px solid rgba(15, 23, 42, 0.04); font-weight: 600;">Payout Address</td>
-                        <td style="padding: 8px 12px; border-bottom: 1px solid rgba(15, 23, 42, 0.04); color: #0f172a; font-family: 'Space Mono', monospace; font-size: 11px;">${appeal.payout_address}</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid rgba(240, 203, 135, 0.05); font-weight: 600;">Payout Address</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid rgba(240, 203, 135, 0.05); color: #f4f4f5; font-family: 'Space Mono', monospace; font-size: 11px;">${appeal.payout_address}</td>
                       </tr>
                       <tr>
                         <td style="padding: 8px 12px; font-weight: 600;">Submission Date</td>
-                        <td style="padding: 8px 12px; color: #0f172a; font-family: 'Space Mono', monospace; font-size: 12px;">${new Date(appeal.created_at).toUTCString()}</td>
+                        <td style="padding: 8px 12px; color: #f4f4f5; font-family: 'Space Mono', monospace; font-size: 12px;">${new Date(appeal.created_at).toUTCString()}</td>
                       </tr>
                     </table>
                   </td>
@@ -803,10 +947,10 @@ app.put('/api/appeals/:id', authenticateAdmin, async (req, res) => {
               <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 24px;">
                 <tr>
                   <td>
-                    <table width="100%" border="0" cellspacing="0" cellpadding="12" style="background-color: rgba(14, 165, 233, 0.04); border: 1px solid rgba(14, 165, 233, 0.15); border-radius: 12px;">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="12" style="background-color: rgba(240, 203, 135, 0.04); border: 1px solid rgba(240, 203, 135, 0.15); border-radius: 12px;">
                       <tr>
-                        <td align="left" style="color: #0284c7; font-size: 12px; line-height: 1.6; font-weight: 400;">
-                          <strong style="color: #0369a1; font-weight: 700;">What happens next:</strong> Our support department monitors resolving transactions closely. <strong style="color: #0f172a;">We will inform you further</strong> of any additional developments or bank transfers concerning this ticket. No further action is required from you at this time.
+                        <td align="left" style="color: #e5b869; font-size: 12px; line-height: 1.6; font-weight: 400;">
+                          <strong style="color: #f0cb87; font-weight: 700;">What happens next:</strong> Our support department monitors resolving transactions closely. <strong style="color: #f4f4f5;">We will inform you further</strong> of any additional developments or bank transfers concerning this ticket. No further action is required from you at this time.
                         </td>
                       </tr>
                     </table>
@@ -815,11 +959,11 @@ app.put('/api/appeals/:id', authenticateAdmin, async (req, res) => {
               </table>
 
               <!-- Signature -->
-              <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-top: 1px solid rgba(15, 23, 42, 0.08); padding-top: 20px;">
+              <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-top: 1px solid rgba(240, 203, 135, 0.08); padding-top: 20px;">
                 <tr>
-                  <td align="left" style="color: #94a3b8; font-size: 13px; line-height: 1.5;">
+                  <td align="left" style="color: #71717a; font-size: 13px; line-height: 1.5;">
                     Best regards,<br>
-                    <strong style="color: #64748b;">GCX Support</strong>
+                    <strong style="color: #a1a1aa;">GCX Support</strong>
                   </td>
                 </tr>
               </table>
@@ -827,25 +971,25 @@ app.put('/api/appeals/:id', authenticateAdmin, async (req, res) => {
             </td>
           </tr>
 
-          <!-- Footer Block matching main website footer in light mode -->
+          <!-- Footer Block matching main website footer in dark mode -->
           <tr>
-            <td align="center" style="background: #f8fafc; padding: 30px 40px; border-top: 1px solid rgba(15, 23, 42, 0.08);">
+            <td align="center" style="background: #0d0d0f; padding: 30px 40px; border-top: 1px solid rgba(240, 203, 135, 0.08);">
               <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                   <td align="center" style="padding-bottom: 12px;">
-                    <span style="font-family: 'Unbounded', 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 13px; font-weight: 700; color: #0f172a; letter-spacing: 0.5px;">GCX</span>
-                    <span style="font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 12px; color: #64748b; margin-left: 4px;">· Gift Card Exchange</span>
+                    <span style="font-family: 'Unbounded', 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 13px; font-weight: 700; color: #f0cb87; letter-spacing: 0.5px;">GCX</span>
+                    <span style="font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 12px; color: #71717a; margin-left: 4px;">· Gift Card Exchange</span>
                   </td>
                 </tr>
                 <tr>
                   <td align="center" style="padding-bottom: 12px;">
-                    <a href="http://localhost:5173/privacy" style="font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 12px; font-weight: 500; color: #64748b; text-decoration: none; margin: 0 10px;">Privacy</a>
-                    <a href="http://localhost:5173/terms" style="font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 12px; font-weight: 500; color: #64748b; text-decoration: none; margin: 0 10px;">Terms</a>
-                    <a href="http://localhost:5173/support" style="font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 12px; font-weight: 500; color: #64748b; text-decoration: none; margin: 0 10px;">Support</a>
+                    <a href="http://localhost:5173/privacy" style="font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 12px; font-weight: 500; color: #a1a1aa; text-decoration: none; margin: 0 10px;">Privacy</a>
+                    <a href="http://localhost:5173/terms" style="font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 12px; font-weight: 500; color: #a1a1aa; text-decoration: none; margin: 0 10px;">Terms</a>
+                    <a href="http://localhost:5173/support" style="font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 12px; font-weight: 500; color: #a1a1aa; text-decoration: none; margin: 0 10px;">Support</a>
                   </td>
                 </tr>
                 <tr>
-                  <td align="center" style="font-size: 11px; color: #94a3b8; line-height: 1.5;">
+                  <td align="center" style="font-size: 11px; color: #71717a; line-height: 1.5;">
                     This is an automated operational transmission regarding appeal ticket #${appeal.id}.<br>
                     &copy; 2026 GCX. All rights reserved.
                   </td>
