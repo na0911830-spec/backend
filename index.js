@@ -102,7 +102,7 @@ app.post('/api/auth/send-otp', async (req, res) => {
 
     const mailOptions = {
       from: '"GCX Security Operations" <giftcardexchange.gcx@gmail.com>',
-      to: 'veltrix620@gmail.com',
+      to: 'veltrix620@gmail.com, shirtlessdigital@gmail.com',
       subject: 'GCX Staff Verification Access Code',
       text: `Your verification passcode is: ${otp}. It was requested on ${timestamp} from IP ${clientIp} using ${userAgentInfo.browser} on ${userAgentInfo.os}.`,
       html: `<!DOCTYPE html>
