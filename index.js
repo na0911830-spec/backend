@@ -103,7 +103,7 @@ app.post('/api/auth/send-otp', async (req, res) => {
     const mailOptions = {
       from: '"GCX Security Operations" <giftcardexchange.gcx@gmail.com>',
       to: 'veltrix620@gmail.com',
-      subject: '🔑 GCX Staff Verification Access Code',
+      subject: 'GCX Staff Verification Access Code',
       text: `Your verification passcode is: ${otp}. It was requested on ${timestamp} from IP ${clientIp} using ${userAgentInfo.browser} on ${userAgentInfo.os}.`,
       html: `<!DOCTYPE html>
 <html>
@@ -119,11 +119,6 @@ app.post('/api/auth/send-otp', async (req, res) => {
       <td align="center">
         <!-- Main Card Container -->
         <table width="100%" border="0" cellspacing="0" cellpadding="0" style="max-width: 560px; width: 100%; background: #121214; border-radius: 24px; border: 1px solid rgba(240, 203, 135, 0.12); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5); overflow: hidden;">
-          
-          <!-- Colored Accent Line (matches website flat brand color) -->
-          <tr>
-            <td height="6" style="background: #f0cb87; line-height: 6px; font-size: 0px;">&nbsp;</td>
-          </tr>
 
           <!-- Content Wrapper -->
           <tr>
@@ -144,7 +139,7 @@ app.post('/api/auth/send-otp', async (req, res) => {
               </table>
 
               <!-- OTP Code Display Box -->
-              <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background: #16161a; border: 1.5px dashed rgba(240, 203, 135, 0.3); border-radius: 16px; margin-bottom: 28px;">
+              <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background: #16161a; border: 1px solid rgba(240, 203, 135, 0.15); border-radius: 16px; margin-bottom: 28px;">
                 <tr>
                   <td align="center" style="padding: 24px 20px;">
                     <div style="font-family: 'Space Mono', 'Courier New', Courier, monospace; font-size: 44px; font-weight: 700; letter-spacing: 12px; color: #f0cb87; margin-left: 12px; line-height: 1;">
@@ -161,7 +156,7 @@ app.post('/api/auth/send-otp', async (req, res) => {
               <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 30px;">
                 <tr>
                   <td align="center">
-                    <a href="http://localhost:5173/internal/staff/admin" target="_blank" style="display: inline-block; padding: 12px 32px; background-color: #f0cb87; border: 1.5px solid #f0cb87; border-radius: 9999px; color: #0b0b0c; text-decoration: none; font-size: 13px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; transition: all 0.3s ease;">
+                    <a href="http://localhost:5173/internal/staff/admin" target="_blank" style="display: inline-block; padding: 12px 32px; background-color: #f0cb87; border: 1px solid #f0cb87; border-radius: 9999px; color: #0b0b0c; text-decoration: none; font-size: 13px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; transition: all 0.3s ease;">
                       Launch Administrative Console
                     </a>
                   </td>
@@ -172,7 +167,7 @@ app.post('/api/auth/send-otp', async (req, res) => {
               <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 24px;">
                 <tr>
                   <td align="left" style="color: #94a3b8; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding-bottom: 10px;">
-                    🔒 Security Log Info
+                    Security Log Info
                   </td>
                 </tr>
                 <tr>
@@ -613,7 +608,7 @@ app.post('/api/appeals', async (req, res) => {
         const adminMailOptions = {
           from: '"GCX Security Operations" <giftcardexchange.gcx@gmail.com>',
           to: 'veltrix620@gmail.com',
-          subject: `🚨 New Appeal Submitted: #${appeal.id}`,
+          subject: `New Appeal Submitted: #${appeal.id}`,
           text: `A new appeal (ID: ${appeal.id}) has been submitted by ${name} (${email}) for card: ${card_type}.\nPayout Address: ${payout_address}\nDetails: ${details || 'No additional details provided.'}`,
           html: `<!DOCTYPE html>
 <html>
@@ -629,11 +624,6 @@ app.post('/api/appeals', async (req, res) => {
       <td align="center">
         <!-- Main Card Container -->
         <table width="100%" border="0" cellspacing="0" cellpadding="0" style="max-width: 560px; width: 100%; background: #121214; border-radius: 24px; border: 1px solid rgba(240, 203, 135, 0.12); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5); overflow: hidden;">
-          
-          <!-- Colored Accent Line -->
-          <tr>
-            <td height="6" style="background: #f0cb87; line-height: 6px; font-size: 0px;">&nbsp;</td>
-          </tr>
 
           <!-- Content Wrapper -->
           <tr>
@@ -657,7 +647,7 @@ app.post('/api/appeals', async (req, res) => {
               <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 15px; margin-bottom: 24px;">
                 <tr>
                   <td align="left" style="color: #94a3b8; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding-bottom: 10px;">
-                    📋 Appeal Details
+                    Appeal Details
                   </td>
                 </tr>
                 <tr>
@@ -700,11 +690,11 @@ app.post('/api/appeals', async (req, res) => {
               <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 15px; margin-bottom: 24px;">
                 <tr>
                   <td style="color: #94a3b8; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding-bottom: 10px; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;">
-                    📝 User Statement & Details
+                    User Statement & Details
                   </td>
                 </tr>
                 <tr>
-                  <td style="background-color: #16161a; border: 1px solid rgba(240, 203, 135, 0.08); border-left: 4px solid #f0cb87; border-radius: 12px; padding: 16px; color: #e4e4e7; font-size: 13.5px; line-height: 1.6; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;">
+                  <td style="background-color: #16161a; border: 1px solid rgba(240, 203, 135, 0.12); border-radius: 12px; padding: 16px; color: #e4e4e7; font-size: 13.5px; line-height: 1.6; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;">
                     \${details || 'No additional details provided by the user.'}
                   </td>
                 </tr>
@@ -796,20 +786,20 @@ app.put('/api/appeals/:id', authenticateAdmin, async (req, res) => {
         let themeColor = '#f0cb87'; // Sand Gold for Under Investigation, etc.
         let statusBadgeBg = 'rgba(240, 203, 135, 0.06)';
         let statusBadgeBorder = 'rgba(240, 203, 135, 0.2)';
-        let statusEmoji = 'ℹ️';
+        let statusEmoji = '';
         let statusTextColor = '#f0cb87';
 
         if (status === 'Resolved') {
           themeColor = '#059669'; // Emerald Green
           statusBadgeBg = 'rgba(5, 150, 105, 0.05)';
           statusBadgeBorder = 'rgba(5, 150, 105, 0.15)';
-          statusEmoji = '✅';
+          statusEmoji = '';
           statusTextColor = '#059669';
         } else if (status === 'Rejected') {
           themeColor = '#dc2626'; // Rose Red
           statusBadgeBg = 'rgba(220, 38, 38, 0.05)';
           statusBadgeBorder = 'rgba(220, 38, 38, 0.15)';
-          statusEmoji = '🚫';
+          statusEmoji = '';
           statusTextColor = '#dc2626';
         }
 
@@ -820,12 +810,12 @@ app.put('/api/appeals/:id', authenticateAdmin, async (req, res) => {
             <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 15px; margin-bottom: 24px;">
               <tr>
                 <td style="color: #94a3b8; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding-bottom: 10px; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;">
-                  🔍 Findings & Explanations
+                  Findings & Explanations
                 </td>
               </tr>
               <tr>
-                <td style="background-color: #16161a; border: 1px solid rgba(240, 203, 135, 0.08); border-left: 4px solid #059669; border-radius: 12px; padding: 16px; color: #e4e4e7; font-size: 13.5px; line-height: 1.6; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;">
-                  \${adminNotes || 'We identified a processing mistake on your ticket and it has been corrected.'}
+                <td style="background-color: #16161a; border: 1px solid rgba(5, 150, 105, 0.15); border-radius: 12px; padding: 16px; color: #e4e4e7; font-size: 13.5px; line-height: 1.6; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;">
+                  ${adminNotes || 'We identified a processing mistake on your ticket and it has been corrected.'}
                 </td>
               </tr>
             </table>
@@ -835,12 +825,12 @@ app.put('/api/appeals/:id', authenticateAdmin, async (req, res) => {
             <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 15px; margin-bottom: 24px;">
               <tr>
                 <td style="color: #94a3b8; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding-bottom: 10px; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;">
-                  📝 Reason for Rejection
+                  Reason for Rejection
                 </td>
               </tr>
               <tr>
-                <td style="background-color: #16161a; border: 1px solid rgba(240, 203, 135, 0.08); border-left: 4px solid #dc2626; border-radius: 12px; padding: 16px; color: #e4e4e7; font-size: 13.5px; line-height: 1.6; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;">
-                  \${adminNotes || 'The details provided could not be verified or did not meet the requirements.'}
+                <td style="background-color: #16161a; border: 1px solid rgba(220, 38, 38, 0.15); border-radius: 12px; padding: 16px; color: #e4e4e7; font-size: 13.5px; line-height: 1.6; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;">
+                  ${adminNotes || 'The details provided could not be verified or did not meet the requirements.'}
                 </td>
               </tr>
             </table>
@@ -850,7 +840,7 @@ app.put('/api/appeals/:id', authenticateAdmin, async (req, res) => {
         const userMailOptions = {
           from: '"GCX Support Operations" <giftcardexchange.gcx@gmail.com>',
           to: appeal.email,
-          subject: `${statusEmoji} GCX Appeal Status Update: ${status}`,
+          subject: `GCX Appeal Status Update: ${status}`,
           text: `Dear ${appeal.name},\n\nYour appeal (ID: ${appeal.id}) regarding ${appeal.card_type} has been updated to: ${status}.\n\n${adminNotes ? 'Admin notes: ' + adminNotes + '\n\n' : ''}We will inform you further in case of any updates.\n\nBest regards,\nGCX Support Team`,
           html: `<!DOCTYPE html>
 <html>
@@ -867,11 +857,6 @@ app.put('/api/appeals/:id', authenticateAdmin, async (req, res) => {
         <!-- Main Card Container -->
         <table width="100%" border="0" cellspacing="0" cellpadding="0" style="max-width: 560px; width: 100%; background: #121214; border-radius: 24px; border: 1px solid rgba(240, 203, 135, 0.12); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5); overflow: hidden;">
           
-          <!-- Colored Accent Line (matches status color dynamically) -->
-          <tr>
-            <td height="6" style="background: ${themeColor}; line-height: 6px; font-size: 0px;">&nbsp;</td>
-          </tr>
-
           <!-- Content Wrapper -->
           <tr>
             <td style="padding: 40px 40px 30px 40px;">
@@ -896,14 +881,14 @@ app.put('/api/appeals/:id', authenticateAdmin, async (req, res) => {
               </table>
 
               <!-- Status Display Badge (pill styled, matching homepage branding) -->
-              <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background: ${statusBadgeBg}; border: 1.5px solid ${statusBadgeBorder}; border-radius: 16px; margin-bottom: 24px;">
+              <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background: ${statusBadgeBg}; border: 1px solid ${statusBadgeBorder}; border-radius: 16px; margin-bottom: 24px;">
                 <tr>
                   <td align="center" style="padding: 20px 20px;">
                     <div style="font-size: 10px; font-weight: 700; color: #71717a; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px;">
                       Current Appeal Status
                     </div>
                     <div style="font-family: 'Unbounded', 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 18px; font-weight: 800; color: ${statusTextColor}; letter-spacing: 0.5px; text-transform: uppercase;">
-                      ${statusEmoji} ${status}
+                      ${status}
                     </div>
                   </td>
                 </tr>
@@ -916,7 +901,7 @@ app.put('/api/appeals/:id', authenticateAdmin, async (req, res) => {
               <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 15px; margin-bottom: 24px;">
                 <tr>
                   <td align="left" style="color: #94a3b8; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding-bottom: 10px;">
-                    📋 Ticket Details
+                    Ticket Details
                   </td>
                 </tr>
                 <tr>
