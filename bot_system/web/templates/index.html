@@ -1,0 +1,1863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GCX IMS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/static/style.css">
+
+  <!-- SVG Icon Sprite -->
+  <svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="ic-bolt" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9 1L4 9h5l-2 6 7-8h-5z"/>
+    </symbol>
+    <symbol id="ic-grid" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+      <rect x="1.5" y="1.5" width="5" height="5" rx="1"/>
+      <rect x="9.5" y="1.5" width="5" height="5" rx="1"/>
+      <rect x="1.5" y="9.5" width="5" height="5" rx="1"/>
+      <rect x="9.5" y="9.5" width="5" height="5" rx="1"/>
+    </symbol>
+    <symbol id="ic-credit-card" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+      <rect x="1" y="3.5" width="14" height="9" rx="1.5"/>
+      <line x1="1" y1="6.5" x2="15" y2="6.5"/>
+      <line x1="4" y1="10" x2="7" y2="10"/>
+    </symbol>
+    <symbol id="ic-download" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 2v8M5 7l3 3 3-3"/><line x1="2" y1="13" x2="14" y2="13"/>
+    </symbol>
+    <symbol id="ic-shield" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 1.5l5.5 2v4c0 3-2.5 5.5-5.5 7C2.5 13 0 10.5 0 7.5v-4z" transform="translate(0.5)"/>
+    </symbol>
+    <symbol id="ic-alert" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 1L1 14h14z"/><line x1="8" y1="6" x2="8" y2="9"/><circle cx="8" cy="11.5" r="0.5" fill="currentColor"/>
+    </symbol>
+    <symbol id="ic-sun" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+      <circle cx="8" cy="8" r="3"/><line x1="8" y1="1" x2="8" y2="3"/><line x1="8" y1="13" x2="8" y2="15"/>
+      <line x1="1" y1="8" x2="3" y2="8"/><line x1="13" y1="8" x2="15" y2="8"/>
+      <line x1="3" y1="3" x2="4.4" y2="4.4"/><line x1="11.6" y1="11.6" x2="13" y2="13"/>
+      <line x1="13" y1="3" x2="11.6" y2="4.4"/><line x1="4.4" y1="11.6" x2="3" y2="13"/>
+    </symbol>
+    <symbol id="ic-moon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+      <path d="M13 10.5A6 6 0 015.5 3a6 6 0 100 10 6 6 0 007.5-2.5z"/>
+    </symbol>
+    <symbol id="ic-refresh" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M13.5 2.5A6.5 6.5 0 103 9.5"/><path d="M1 7l2 2.5L5.5 7"/>
+    </symbol>
+    <symbol id="ic-plus" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <line x1="8" y1="2" x2="8" y2="14"/><line x1="2" y1="8" x2="14" y2="8"/>
+    </symbol>
+    <symbol id="ic-search" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+      <circle cx="6.5" cy="6.5" r="4.5"/><line x1="10" y1="10" x2="14" y2="14"/>
+    </symbol>
+    <symbol id="ic-close" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+      <line x1="3" y1="3" x2="13" y2="13"/><line x1="13" y1="3" x2="3" y2="13"/>
+    </symbol>
+    <symbol id="ic-info" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+      <circle cx="8" cy="8" r="6.5"/><line x1="8" y1="7" x2="8" y2="11"/><circle cx="8" cy="5" r="0.6" fill="currentColor"/>
+    </symbol>
+    <symbol id="ic-eye" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+      <path d="M1 8s2.5-5 7-5 7 5 7 5-2.5 5-7 5-7-5-7-5z"/><circle cx="8" cy="8" r="2"/>
+    </symbol>
+    <symbol id="ic-calendar" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+      <rect x="1.5" y="2.5" width="13" height="12" rx="1.5"/><line x1="5" y1="1" x2="5" y2="4"/>
+      <line x1="11" y1="1" x2="11" y2="4"/><line x1="1.5" y1="6.5" x2="14.5" y2="6.5"/>
+    </symbol>
+    <symbol id="ic-clock" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+      <circle cx="8" cy="8" r="6.5"/><polyline points="8,4 8,8 11,10"/>
+    </symbol>
+    <symbol id="ic-coin" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+      <circle cx="8" cy="8" r="6.5"/><path d="M9.5 6A2 2 0 007 8a2 2 0 002.5 2M8 4.5V5M8 11v.5"/>
+    </symbol>
+    <symbol id="ic-users" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+      <circle cx="6" cy="5" r="2.5"/><path d="M1 14c0-2.8 2.2-5 5-5s5 2.2 5 5"/>
+      <circle cx="12" cy="5" r="2"/><path d="M12 9.5c1.8.3 3 1.8 3 3.5"/>
+    </symbol>
+    <symbol id="ic-flag" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+      <line x1="3" y1="1" x2="3" y2="15"/><path d="M3 2h10l-2 4 2 4H3"/>
+    </symbol>
+    <symbol id="ic-trash" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+      <polyline points="2,4 14,4"/><path d="M12 4v9.5a1 1 0 01-1 1H5a1 1 0 01-1-1V4"/>
+      <path d="M6 4V2.5A.5.5 0 016.5 2h3a.5.5 0 01.5.5V4"/><line x1="6.5" y1="7" x2="6.5" y2="11"/><line x1="9.5" y1="7" x2="9.5" y2="11"/>
+    </symbol>
+    <symbol id="ic-hash" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+      <line x1="4" y1="1" x2="2.5" y2="15"/><line x1="11" y1="1" x2="9.5" y2="15"/>
+      <line x1="1" y1="6" x2="15" y2="6"/><line x1="1" y1="10" x2="15" y2="10"/>
+    </symbol>
+    <symbol id="ic-edit" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M11 2l3 3L4 14H1v-3L11 2z"/>
+    </symbol>
+    <symbol id="ic-menu" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+      <line x1="2" y1="4" x2="14" y2="4"/><line x1="2" y1="8" x2="14" y2="8"/><line x1="2" y1="12" x2="14" y2="12"/>
+    </symbol>
+  </svg>
+</head>
+
+<body>
+  <!-- Progress-bar spinner & notification popup -->
+  <div id="global-spinner-overlay">
+    <div class="progress-bar-line" id="progress-bar-line" style="display:none;"></div>
+    <div class="save-status-card" id="save-status-card">
+      <div class="status-spinner-icon" id="save-status-icon"></div>
+      <span id="save-status-text">Loading data...</span>
+    </div>
+  </div>
+
+  <div class="app-container">
+
+    <!-- ══════════════════════════════
+         SIDEBAR
+         ══════════════════════════════ -->
+    <aside class="sidebar" id="app-sidebar">
+      <div class="sidebar-top">
+        <div class="brand">
+          <div class="brand-icon">
+            <i class="fa-solid fa-bolt"></i>
+          </div>
+          <div class="brand-text">
+            <div class="brand-name">GCX IMS</div>
+            <div class="brand-version">v2 · AI</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-label">Workspace</div>
+        <ul class="nav-list">
+          <li class="nav-item">
+            <button id="nav-dashboard" class="active" onclick="switchTab('dashboard')" title="Dashboard">
+              <i class="fa-solid fa-chart-pie"></i> <span class="nav-text">Dashboard</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button id="nav-inventory" onclick="switchTab('inventory')" title="Codes Inventory">
+              <i class="fa-solid fa-credit-card"></i> <span class="nav-text">Codes Inventory</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button id="nav-sview" onclick="switchTab('sview')" title="S-View">
+              <i class="fa-solid fa-eye"></i> <span class="nav-text">S-View</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button id="nav-payout" onclick="switchTab('payout')" title="Export Payout">
+              <i class="fa-solid fa-file-export"></i> <span class="nav-text">Export Payout</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button id="nav-scammers" onclick="switchTab('scammers')" title="Scammer Shield">
+              <i class="fa-solid fa-shield-halved"></i> <span class="nav-text">Scammer Shield</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button id="nav-config" onclick="switchTab('config')" title="Config">
+              <i class="fa-solid fa-gear"></i> <span class="nav-text">Config</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button id="nav-danger" class="danger-nav" onclick="switchTab('danger')" title="Danger Zone">
+              <i class="fa-solid fa-triangle-exclamation"></i> <span class="nav-text">Danger Zone</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-bottom">
+        <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn" title="Toggle Theme">
+          <i id="theme-icon" class="fa-solid fa-moon"></i>
+          <span id="theme-label" class="nav-text">Dark Mode</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ══════════════════════════════
+         MAIN CONTENT
+         ══════════════════════════════ -->
+    <div class="main-content">
+
+      <!-- ── Toolbar ── -->
+      <div class="toolbar">
+        <div class="toolbar-left">
+          <button class="btn btn-ghost sidebar-expand-btn" onclick="toggleSidebar()" title="Toggle Sidebar">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <span class="toolbar-title" id="toolbar-title">Dashboard</span>
+          <div class="toolbar-sep"></div>
+          <span class="toolbar-subtitle" id="toolbar-sub">Live metrics &amp; today's submissions</span>
+        </div>
+        <div class="toolbar-right" id="toolbar-actions">
+          <button class="btn btn-default" onclick="fetchMetrics()">
+            <i class="fa-solid fa-rotate-right"></i> Refresh
+          </button>
+        </div>
+      </div>
+
+      <!-- ── View Area ── -->
+      <div class="view-area">
+
+        <!-- ═══════════════════════
+             1. DASHBOARD
+             ═══════════════════════ -->
+        <section id="view-dashboard">
+
+          <div class="grid-cards">
+            <div class="stat-card">
+              <div class="stat-label">
+                <i class="fa-solid fa-calendar-day"></i> Codes Today
+              </div>
+              <div class="stat-value" id="metric-today-codes">—</div>
+              <div class="stat-sub">Live submissions</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">
+                <i class="fa-solid fa-indian-rupee-sign"></i> Total Payout Due
+              </div>
+              <div class="stat-value" id="metric-total-payout">₹—</div>
+              <div class="stat-sub">Across all suppliers</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">
+                <i class="fa-solid fa-clock"></i> 6-day / 1-day Split
+              </div>
+              <div class="stat-value" id="metric-payout-breakdown" style="font-size:clamp(13px,1.3vw,18px);">₹— / ₹—</div>
+              <div class="stat-sub">Term breakdown</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">
+                <i class="fa-solid fa-users"></i> Suppliers / UPIs
+              </div>
+              <div class="stat-value" id="metric-unique-upis">—</div>
+              <div class="stat-sub">Unique payout destinations</div>
+            </div>
+          </div>
+
+          <div class="ledger-row">
+            <div class="ledger-card">
+              <div class="ledger-dot" style="background:var(--warning);"></div>
+              <div class="ledger-info">
+                <div class="stat-label">Unpaid</div>
+                <div class="stat-value" id="metric-unpaid-cnt">—</div>
+              </div>
+            </div>
+            <div class="ledger-card">
+              <div class="ledger-dot" style="background:var(--accent);"></div>
+              <div class="ledger-info">
+                <div class="stat-label">Listed</div>
+                <div class="stat-value" id="metric-listed-cnt">—</div>
+              </div>
+            </div>
+            <div class="ledger-card">
+              <div class="ledger-dot" style="background:var(--success);"></div>
+              <div class="ledger-info">
+                <div class="stat-label">Sold</div>
+                <div class="stat-value" id="metric-sold-cnt">—</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Today's codes table -->
+          <div class="panel">
+            <div class="panel-head">
+              <div class="panel-title">
+                <svg><use href="#ic-calendar"/></svg>
+                Today's Received Codes
+              </div>
+              <div class="panel-actions">
+                <span class="text-muted" style="font-size:clamp(9px,0.62vw,11px);">Auto-refreshes on visit</span>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Time</th>
+                    <th>Phone</th>
+                    <th>Card Name</th>
+                    <th>Codes</th>
+                    <th>UPI / Crypto</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="today-codes-table-body">
+                  <tr><td colspan="7" style="text-align:center;color:var(--subtle);padding:clamp(12px,1.5vh,20px);">Loading...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══════════════════════
+             2. CODES INVENTORY
+             ═══════════════════════ -->
+        <section id="view-inventory" style="display:none;">
+
+          <div class="filter-bar">
+            <input type="text" id="filter-search" class="filter-input" placeholder="Search text / Order ID..." oninput="applyInventoryFilters()">
+            <select id="filter-field" class="filter-select" onchange="applyInventoryFilters()">
+              <option value="all">Search: All Fields</option>
+              <option value="order_id">Search: Order ID</option>
+              <option value="phone">Search: Phone No.</option>
+              <option value="upi">Search: UPI / Crypto</option>
+              <option value="code">Search: Code</option>
+            </select>
+            <select id="filter-platform" class="filter-select" onchange="applyInventoryFilters()">
+              <option value="">All Platforms</option>
+            </select>
+            <select id="filter-slot" class="filter-select" onchange="applyInventoryFilters()">
+              <option value="">All Slots</option>
+            </select>
+            <select id="filter-status" class="filter-select" onchange="applyInventoryFilters()">
+              <option value="">All Statuses</option>
+              <option value="unpaid">Unpaid</option>
+              <option value="listed">Listed</option>
+              <option value="sold">Sold</option>
+              <option value="paid">Paid</option>
+              <option value="rejected">Rejected</option>
+            </select>
+            <select id="filter-term" class="filter-select" onchange="applyInventoryFilters()">
+              <option value="">All Terms (Fast &amp; Normal)</option>
+              <option value="1">Fast Payment (1 Day)</option>
+              <option value="6">Normal Payment (6 Days)</option>
+            </select>
+            <select id="filter-sort" class="filter-select" onchange="applyInventoryFilters()">
+              <option value="date">Sort: Date (Newest First)</option>
+              <option value="phone">Group By: Phone Number</option>
+              <option value="upi">Group By: UPI / Crypto Address</option>
+            </select>
+            <button class="btn btn-ghost" onclick="clearFilters()">Reset</button>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <div class="panel-title">
+                <svg><use href="#ic-credit-card"/></svg>
+                Submissions
+              </div>
+              <div class="panel-actions">
+                <button class="btn btn-default" style="height:clamp(20px,2vh,26px);font-size:clamp(9px,0.62vw,11px);" onclick="fetchInventory()">
+                  <svg><use href="#ic-refresh"/></svg> Refresh
+                </button>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Tag</th>
+                    <th>Type</th>
+                    <th>Date &amp; Time</th>
+                    <th>C-Status</th>
+                    <th>Phone</th>
+                    <th>Card Name</th>
+                    <th>Codes</th>
+                    <th>UPI / Crypto</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="inventory-table-body">
+                  <tr><td colspan="12" style="text-align:center;color:var(--subtle);padding:clamp(12px,1.5vh,20px);">Loading...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══════════════════════
+             2.5. S-VIEW
+             ═══════════════════════ -->
+        <section id="view-sview" style="display:none;">
+
+          <div class="filter-bar">
+            <input type="text" id="sview-search" class="filter-input" placeholder="Search Order ID / Code / Card Name..." oninput="applySViewFilters()">
+            <select id="sview-card-name" class="filter-select" onchange="applySViewFilters()">
+              <option value="">All Cards (PSN, LOL, Amazon, etc.)</option>
+            </select>
+            <select id="sview-platform" class="filter-select" onchange="applySViewFilters()">
+              <option value="">All Platforms</option>
+            </select>
+            <select id="sview-slot" class="filter-select" onchange="applySViewFilters()">
+              <option value="">All Slots</option>
+            </select>
+            <select id="sview-status" class="filter-select" onchange="applySViewFilters()">
+              <option value="">All C-Statuses</option>
+              <option value="ununsold">Ununsold</option>
+              <option value="listed">Listed</option>
+              <option value="sold">Sold</option>
+              <option value="rejected">Rejected</option>
+            </select>
+            <button class="btn btn-ghost" onclick="clearSViewFilters()">Reset</button>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <div class="panel-title">
+                <i class="fa-solid fa-eye"></i>
+                Simplified View (S-View)
+              </div>
+              <div class="panel-actions">
+                <button class="btn btn-default" style="height:clamp(20px,2vh,26px);font-size:clamp(9px,0.62vw,11px);" onclick="fetchInventory()">
+                  <i class="fa-solid fa-rotate-right"></i> Refresh
+                </button>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Order ID</th>
+                    <th>GC Name</th>
+                    <th>GC Code</th>
+                    <th>Platform</th>
+                    <th>Slot</th>
+                    <th>C-Status</th>
+                  </tr>
+                </thead>
+                <tbody id="sview-table-body">
+                  <tr><td colspan="6" style="text-align:center;color:var(--subtle);padding:clamp(12px,1.5vh,20px);">Loading...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══════════════════════
+             3. EXPORT PAYOUT
+             ═══════════════════════ -->
+        <section id="view-payout" style="display:none;">
+          <div class="panel" style="max-width:clamp(300px,32vw,420px);">
+            <div class="panel-head">
+              <div class="panel-title"><svg><use href="#ic-download"/></svg> Payout Export</div>
+            </div>
+            <div style="padding:clamp(12px,1.2vh,18px) clamp(12px,1.1vw,18px); display:flex; flex-direction:column; gap:clamp(8px,0.8vh,12px);">
+              <div>
+                <div class="form-label" style="display:block; margin-bottom:clamp(4px,0.4vh,6px);">Payout Term Offset (Days)</div>
+                <input type="number" id="payout-days" value="6" class="filter-input" style="width:100%;">
+              </div>
+              <button class="btn btn-primary" style="width:100%; justify-content:center; height:clamp(28px,2.8vh,36px);" onclick="downloadPayoutExcel()">
+                <svg><use href="#ic-download"/></svg> Download Excel / CSV
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══════════════════════
+             4. SCAMMER SHIELD
+             ═══════════════════════ -->
+        <section id="view-scammers" style="display:none;">
+          <div class="panel">
+            <div class="panel-head">
+              <div class="panel-title"><svg><use href="#ic-shield"/></svg> Blacklisted Records</div>
+              <div class="panel-actions">
+                <button class="btn btn-default" style="height:clamp(20px,2vh,26px);font-size:clamp(9px,0.62vw,11px);" onclick="fetchScammers()">
+                  <svg><use href="#ic-refresh"/></svg> Refresh
+                </button>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Flagged Date</th>
+                    <th>Phone Number</th>
+                    <th>Payment UPI</th>
+                    <th>Flagged Code</th>
+                    <th>Reason</th>
+                  </tr>
+                </thead>
+                <tbody id="scammers-table-body">
+                  <tr><td colspan="5" style="text-align:center;color:var(--subtle);padding:clamp(12px,1.5vh,20px);">No records.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══════════════════════
+             5. CONFIG PAGE
+             ═══════════════════════ -->
+        <section id="view-config" style="display:none;">
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: clamp(12px,1.5vw,20px);">
+            <!-- Platform Config Card -->
+            <div class="panel">
+              <div class="panel-head">
+                <div class="panel-title"><svg><use href="#ic-hash"/></svg> Platform Options</div>
+              </div>
+              <div style="padding: clamp(12px, 1.2vh, 18px); display:flex; flex-direction:column; gap: 12px;">
+                <div style="display:flex; gap: 8px;">
+                  <input type="text" id="new-platform-input" class="filter-input" placeholder="Enter platform name...">
+                  <button class="btn btn-primary" onclick="addPlatformOption()">Add</button>
+                </div>
+                <div id="platforms-list-container" style="display:flex; flex-direction:column; gap:6px;">
+                  <!-- Dynamic items -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Slot Config Card -->
+            <div class="panel">
+              <div class="panel-head">
+                <div class="panel-title"><svg><use href="#ic-clock"/></svg> Slot Options</div>
+              </div>
+              <div style="padding: clamp(12px, 1.2vh, 18px); display:flex; flex-direction:column; gap: 12px;">
+                <div style="display:flex; gap: 8px;">
+                  <input type="text" id="new-slot-input" class="filter-input" placeholder="Enter slot name...">
+                  <button class="btn btn-primary" onclick="addSlotOption()">Add</button>
+                </div>
+                <div id="slots-list-container" style="display:flex; flex-direction:column; gap:6px;">
+                  <!-- Dynamic items -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══════════════════════
+             6. DANGER ZONE
+             ═══════════════════════ -->
+        <section id="view-danger" style="display:none;">
+          <div class="danger-panel">
+            <div class="danger-panel-head">
+              <svg><use href="#ic-trash"/></svg>
+              <span class="danger-panel-title">Security Authorization Required</span>
+            </div>
+            <div class="danger-panel-body">
+              <p>
+                Permanently drops all records in
+                <span class="mono">submissions</span> and <span class="mono">scammers</span> tables.
+                This action cannot be undone.
+              </p>
+              <input type="password" id="danger-passkey" placeholder="Admin passkey (default: admin123)">
+              <button class="btn btn-danger" style="width:100%; justify-content:center; height:clamp(28px,2.8vh,36px);" onclick="resetAllData()">
+                <svg><use href="#ic-trash"/></svg> Authorize Data Wipe
+              </button>
+            </div>
+          </div>
+        </section>
+
+      </div><!-- /view-area -->
+    </div><!-- /main-content -->
+  </div><!-- /app-container -->
+
+  <!-- ══════════════════════════════
+       MODAL: Manual Entry
+       ══════════════════════════════ -->
+  <div id="modal-manual-entry" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-head">
+        <span class="modal-title">Manual Code Entry</span>
+        <button class="modal-close" onclick="closeManualModal()">
+          <svg><use href="#ic-close"/></svg> Close
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-field">
+          <div class="form-row">
+            <label class="form-label">Order ID</label>
+            <input type="text" id="manual-order-id" placeholder="e.g. ORD-98124">
+          </div>
+          <div class="form-row">
+            <label class="form-label">Phone Number</label>
+            <input type="text" id="manual-phone" placeholder="e.g. 9014071379">
+          </div>
+          <div class="form-row">
+            <label class="form-label">Gift Card Name</label>
+            <select id="manual-card-name" class="filter-select" style="width:100%;height:30px;"></select>
+          </div>
+          <div class="form-row">
+            <label class="form-label">Gift Card Codes (one per line)</label>
+            <textarea id="manual-codes" placeholder="Enter one code per line"></textarea>
+          </div>
+          <div class="form-row">
+            <label class="form-label">UPI ID or Crypto Address</label>
+            <input type="text" id="manual-upi" placeholder="e.g. supplier@upi or 0xABC...">
+          </div>
+          <div class="form-row">
+            <label class="form-label">Total Amount (INR)</label>
+            <input type="number" id="manual-amount" placeholder="0">
+          </div>
+          <div class="form-row">
+            <label class="form-label">Platform</label>
+            <select id="manual-platform" class="filter-select" style="width:100%;height:30px;"></select>
+          </div>
+          <div class="form-row">
+            <label class="form-label">Slot</label>
+            <select id="manual-slot" class="filter-select" style="width:100%;height:30px;"></select>
+          </div>
+          <button class="btn btn-primary" style="width:100%; justify-content:center; height:clamp(28px,2.8vh,36px); margin-top:clamp(4px,0.4vh,6px);" onclick="submitManualCode()">
+            Save to Database
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════
+       MODAL: Edit Record
+       ══════════════════════════════ -->
+  <div id="modal-edit-entry" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-head">
+        <span class="modal-title">Edit Record</span>
+        <button class="modal-close" onclick="closeEditModal()">
+          <svg><use href="#ic-close"/></svg> Close
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="edit-id">
+        <input type="hidden" id="edit-source">
+        <div class="form-field">
+          <div class="form-row">
+            <label class="form-label">Order ID</label>
+            <input type="text" id="edit-order-id" placeholder="Order ID">
+          </div>
+          <div class="form-row">
+            <label class="form-label">Phone Number</label>
+            <input type="text" id="edit-phone">
+          </div>
+          <div class="form-row">
+            <label class="form-label">Date &amp; Time (dd/mm/yy or dd-mm-yy)</label>
+            <input type="text" id="edit-created-at" placeholder="e.g. 05/08/24 14:30 or 05-08-2024">
+          </div>
+          <div class="form-row">
+            <label class="form-label">Gift Card Name</label>
+            <select id="edit-card-name" class="filter-select" style="width:100%;height:30px;"></select>
+          </div>
+          <div class="form-row">
+            <label class="form-label">Gift Card Code(s)</label>
+            <input type="text" id="edit-codes">
+          </div>
+          <div class="form-row">
+            <label class="form-label">UPI ID / Payment Details</label>
+            <input type="text" id="edit-upi">
+          </div>
+          <div class="form-row">
+            <label class="form-label">Total Amount & Currency</label>
+            <div style="display:flex;gap:8px;">
+              <select id="edit-currency" class="filter-select" style="width:110px;height:30px;">
+                <option value="Rs.">Rs. (INR)</option>
+                <option value="$">$ (USD)</option>
+              </select>
+              <input type="number" id="edit-amount" style="flex:1;">
+            </div>
+          </div>
+          <div class="form-row">
+            <label class="form-label">Payout Term</label>
+            <select id="edit-payout-term" class="filter-select" style="width:100%;height:30px;">
+              <option value="1">Fast Payment (1 Day)</option>
+              <option value="6">Normal Payment (6 Days)</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label class="form-label">Card Condition</label>
+            <select id="edit-card-type" class="filter-select" style="width:100%;height:30px;">
+              <option value="NEW">New</option>
+              <option value="OLD">Old</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label class="form-label">Platform</label>
+            <select id="edit-platform" class="filter-select" style="width:100%;height:30px;"></select>
+          </div>
+          <div class="form-row">
+            <label class="form-label">Slot</label>
+            <select id="edit-slot" class="filter-select" style="width:100%;height:30px;"></select>
+          </div>
+          <div class="form-row">
+            <label class="form-label">Status</label>
+            <select id="edit-status" class="filter-select" style="width:100%;height:30px;">
+              <option value="unpaid">Unpaid</option>
+              <option value="listed">Listed</option>
+              <option value="sold">Sold</option>
+              <option value="paid">Paid</option>
+              <option value="rejected">Rejected</option>
+            </select>
+          </div>
+          <button class="btn btn-primary" style="width:100%; justify-content:center; height:clamp(28px,2.8vh,36px); margin-top:clamp(6px,0.5vh,8px);" onclick="saveEditRecord()">
+            Update Record
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════
+       MODAL: Audit Details
+       ══════════════════════════════ -->
+  <div id="modal-audit-details" class="modal-overlay">
+    <div class="modal-box wide">
+      <div class="modal-head">
+        <span class="modal-title">Submission Audit</span>
+        <button class="modal-close" onclick="closeAuditModal()">
+          <svg><use href="#ic-close"/></svg> Close
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="audit-details-content">
+          <div style="text-align:center;color:var(--subtle);padding:clamp(16px,2vh,24px);">Loading...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ── Sidebar Collapse ── */
+    (function() {
+      const isCollapsed = localStorage.getItem('sidebar_collapsed') === 'true';
+      if (isCollapsed) {
+        document.addEventListener('DOMContentLoaded', () => {
+          const sb = document.getElementById('app-sidebar');
+          if (sb) sb.classList.add('collapsed');
+        });
+      }
+    })();
+
+    function toggleSidebar() {
+      const sb = document.getElementById('app-sidebar');
+      if (!sb) return;
+      sb.classList.toggle('collapsed');
+      localStorage.setItem('sidebar_collapsed', sb.classList.contains('collapsed'));
+    }
+
+    /* ── Theme ── */
+    (function() {
+      const saved = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = saved || (prefersDark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+      updateThemeButton(theme);
+    })();
+
+    function updateThemeButton(theme) {
+      const icon  = document.getElementById('theme-icon');
+      const label = document.getElementById('theme-label');
+      if (!icon || !label) return;
+      if (theme === 'dark') {
+        icon.innerHTML = '<use href="#ic-sun"/>';
+        label.textContent = 'Light Mode';
+      } else {
+        icon.innerHTML = '<use href="#ic-moon"/>';
+        label.textContent = 'Dark Mode';
+      }
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'light';
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      updateThemeButton(next);
+    }
+
+    /* ── Spinner & Save Status Popup ── */
+    let spinnerTimeout;
+    function showSpinner(msg = 'Loading data...') {
+      clearTimeout(spinnerTimeout);
+      const textEl = document.getElementById('save-status-text');
+      const iconEl = document.getElementById('save-status-icon');
+      if (textEl) textEl.textContent = msg;
+      if (iconEl) {
+        iconEl.className = 'status-spinner-icon';
+        iconEl.style.cssText = '';
+        iconEl.innerHTML = '';
+      }
+
+      const bar = document.getElementById('progress-bar-line');
+      if (bar) {
+        bar.style.display = 'block';
+        bar.style.animation = 'none';
+        bar.offsetHeight; // reflow
+        bar.style.animation = '';
+      }
+      document.getElementById('global-spinner-overlay').classList.add('active');
+    }
+
+    function hideSpinner(successMsg = 'Done!') {
+      clearTimeout(spinnerTimeout);
+      const textEl = document.getElementById('save-status-text');
+      const iconEl = document.getElementById('save-status-icon');
+      if (textEl) textEl.textContent = successMsg;
+      if (iconEl) {
+        iconEl.className = '';
+        iconEl.innerHTML = '✓';
+        iconEl.style.cssText = 'color:var(--success);font-weight:bold;font-size:15px;line-height:1;';
+      }
+
+      spinnerTimeout = setTimeout(() => {
+        const bar = document.getElementById('progress-bar-line');
+        if (bar) bar.style.display = 'none';
+        document.getElementById('global-spinner-overlay').classList.remove('active');
+      }, 500);
+    }
+
+    /* ── Pending Bulk Sync Management ── */
+    let pendingChanges = {}; // key: `${source}_${id}`, value: { id, source, order_id?, platform?, slot?, status? }
+
+    function stageChange(id, source, field, value) {
+      const key = `${source}_${id}`;
+      if (!pendingChanges[key]) {
+        pendingChanges[key] = { id, source };
+      }
+      pendingChanges[key][field] = value;
+      updateBulkSaveButton();
+    }
+
+    function updateBulkSaveButton() {
+      const count = Object.keys(pendingChanges).length;
+      const btn = document.getElementById('btn-bulk-save');
+      if (btn) {
+        if (count > 0) {
+          btn.style.display = 'inline-flex';
+          btn.innerHTML = `<i class="fa-solid fa-floppy-disk"></i> Save ${count} Change${count > 1 ? 's' : ''}`;
+        } else {
+          btn.style.display = 'none';
+        }
+      }
+    }
+
+    async function bulkSavePendingChanges() {
+      const keys = Object.keys(pendingChanges);
+      if (keys.length === 0) return;
+      const updates = keys.map(k => pendingChanges[k]);
+
+      showSpinner('Saving data...');
+      try {
+        await fetch('/api/submission/bulk-update', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ updates })
+        });
+        pendingChanges = {};
+        updateBulkSaveButton();
+        hideSpinner('Data saved!');
+        await fetchInventory();
+      } catch(e) {
+        console.error('Bulk save failed', e);
+        hideSpinner('Save failed!');
+      }
+    }
+
+    function copyToClipboard(btn, text) {
+      if (!text) return;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        const origIcon = btn.innerHTML;
+        btn.innerHTML = '<i class="fa-solid fa-check"></i>';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.innerHTML = origIcon;
+        }, 1500);
+      }).catch(err => {
+        console.error('Copy failed', err);
+      });
+    }
+
+    /* ── Tab switching ── */
+    const tabMeta = {
+      dashboard: { title: 'Dashboard',       sub: 'Live metrics & today\'s submissions' },
+      inventory: { title: 'Codes Inventory', sub: 'Date-ordered submissions · aging alerts' },
+      sview:     { title: 'S-View',          sub: 'Simplified Gift Cards table view' },
+      payout:    { title: 'Export Payout',   sub: 'Download payment reports' },
+      scammers:  { title: 'Scammer Shield',  sub: 'Auto-flagged duplicates & blocked UPIs' },
+      config:    { title: 'System Config',   sub: 'Manage platform and slot dropdown options' },
+      danger:    { title: 'Danger Zone',     sub: 'Restricted system operations' }
+    };
+
+    const PREDEFINED_CARD_NAMES = [
+      "PSN 1000", "PSN 2000", "PSN 3000", "PSN 4000", "PSN 5000",
+      "OV 500", "OV 1000",
+      "LOL 100 Rp", "LOL 575 Rp",
+      "Roblox 800", "Roblox 1000",
+      "MC 330 Coins",
+      "PVR Rs.500",
+      "Target 5$ Us", "Target 10 $ Us", "Target 15 $ Us",
+      "SOT 550 Coins", "SOT 1000 Coins",
+      "Amazon Us 5 $", "Amazon Us 10 $",
+      "Amazon Germany 5 $", "Amazon Germany 10 $",
+      "Amazon France 5 $", "Amazon France 10 $",
+      "Best Buy 5 $", "Best Buy 10 $", "Best Buy 15 $",
+      "Apple 5$", "Apple 10 $",
+      "Walmart 5$", "Walmart 10 $",
+      "Amazon India 1000", "Amazon India 500"
+    ];
+
+    function getCardNameBadge(name) {
+      if (!name || name === '—') return '<span class="text-muted">—</span>';
+      const n = name.trim();
+      let color = '#2563eb'; // Default accent blue
+      let bg = 'rgba(37,99,235,0.12)';
+
+      if (n.startsWith('PSN')) {
+        color = '#3b82f6'; bg = 'rgba(59,130,246,0.15)'; // PlayStation Blue
+      } else if (n.startsWith('OV')) {
+        color = '#D98850'; bg = 'rgba(217,136,80,0.18)'; // Muted Orange for Overwatch
+      } else if (n.startsWith('LOL')) {
+        color = '#5CD685'; bg = 'rgba(92,214,133,0.18)'; // Mint Green for League of Legends
+      } else if (n.startsWith('Roblox')) {
+        color = '#ef4444'; bg = 'rgba(239,68,68,0.15)'; // Red for Roblox
+      } else if (n.startsWith('MC')) {
+        color = '#eab308'; bg = 'rgba(234,179,8,0.15)'; // Gold for Minecraft
+      } else if (n.startsWith('PVR')) {
+        color = '#a855f7'; bg = 'rgba(168,85,247,0.15)'; // Purple for PVR
+      } else if (n.startsWith('Target')) {
+        color = '#dc2626'; bg = 'rgba(220,38,38,0.15)'; // Target Red
+      } else if (n.startsWith('SOT')) {
+        color = '#14b8a6'; bg = 'rgba(20,184,166,0.15)'; // Teal for Sea of Thieves
+      } else if (n.startsWith('Amazon')) {
+        color = '#f97316'; bg = 'rgba(249,115,22,0.15)'; // Orange for Amazon
+      } else if (n.startsWith('Best Buy')) {
+        color = '#1d4ed8'; bg = 'rgba(29,78,216,0.15)'; // Dark Blue for Best Buy
+      } else if (n.startsWith('Apple')) {
+        color = '#64748b'; bg = 'rgba(100,116,139,0.15)'; // Slate for Apple
+      } else if (n.startsWith('Walmart')) {
+        color = '#0284c7'; bg = 'rgba(2,132,199,0.15)'; // Sky Blue for Walmart
+      }
+
+      return `<span style="display:inline-block;padding:2px 8px;border-radius:6px;font-weight:600;font-size:clamp(10px,0.7vw,12px);color:${color};background:${bg};border:1px solid ${color}40;">${n}</span>`;
+    }
+
+    let appConfig = { platforms: ["test1", "test2", "test3"], slots: ["test1", "test2", "test3"] };
+
+    async function loadAppConfig() {
+      try {
+        appConfig = await fetch('/api/config').then(r => r.json());
+        populateDropdownOptions();
+        renderConfigLists();
+      } catch(e) { console.error('Failed loading config', e); }
+    }
+
+    function populateDropdownOptions() {
+      // Filter dropdowns
+      const filterPlat = document.getElementById('filter-platform');
+      const filterSlot = document.getElementById('filter-slot');
+      if (filterPlat) {
+        const cur = filterPlat.value;
+        filterPlat.innerHTML = '<option value="">All Platforms</option>' + 
+          appConfig.platforms.map(p => `<option value="${p}">${p}</option>`).join('');
+        filterPlat.value = cur;
+      }
+      if (filterSlot) {
+        const cur = filterSlot.value;
+        filterSlot.innerHTML = '<option value="">All Slots</option>' + 
+          appConfig.slots.map(s => `<option value="${s}">${s}</option>`).join('');
+        filterSlot.value = cur;
+      }
+
+      // S-View Filter dropdowns
+      const sviewCard = document.getElementById('sview-card-name');
+      const sviewPlat = document.getElementById('sview-platform');
+      const sviewSlot = document.getElementById('sview-slot');
+      if (sviewCard) {
+        const cur = sviewCard.value;
+        sviewCard.innerHTML = '<option value="">All Cards (PSN, LOL, Amazon, etc.)</option>' +
+          PREDEFINED_CARD_NAMES.map(c => `<option value="${c}">${c}</option>`).join('');
+        sviewCard.value = cur;
+      }
+      if (sviewPlat) {
+        const cur = sviewPlat.value;
+        sviewPlat.innerHTML = '<option value="">All Platforms</option>' + 
+          appConfig.platforms.map(p => `<option value="${p}">${p}</option>`).join('');
+        sviewPlat.value = cur;
+      }
+      if (sviewSlot) {
+        const cur = sviewSlot.value;
+        sviewSlot.innerHTML = '<option value="">All Slots</option>' + 
+          appConfig.slots.map(s => `<option value="${s}">${s}</option>`).join('');
+        sviewSlot.value = cur;
+      }
+
+      // Manual modal dropdowns
+      const manPlat = document.getElementById('manual-platform');
+      const manSlot = document.getElementById('manual-slot');
+      const manCard = document.getElementById('manual-card-name');
+      if (manPlat) manPlat.innerHTML = appConfig.platforms.map(p => `<option value="${p}">${p}</option>`).join('');
+      if (manSlot) manSlot.innerHTML = appConfig.slots.map(s => `<option value="${s}">${s}</option>`).join('');
+      if (manCard) manCard.innerHTML = PREDEFINED_CARD_NAMES.map(c => `<option value="${c}">${c}</option>`).join('');
+
+      // Edit modal dropdowns
+      const editPlat = document.getElementById('edit-platform');
+      const editSlot = document.getElementById('edit-slot');
+      const editCard = document.getElementById('edit-card-name');
+      if (editPlat) editPlat.innerHTML = appConfig.platforms.map(p => `<option value="${p}">${p}</option>`).join('');
+      if (editSlot) editSlot.innerHTML = appConfig.slots.map(s => `<option value="${s}">${s}</option>`).join('');
+      if (editCard) editCard.innerHTML = PREDEFINED_CARD_NAMES.map(c => `<option value="${c}">${c}</option>`).join('');
+    }
+
+    function renderConfigLists() {
+      const pContainer = document.getElementById('platforms-list-container');
+      const sContainer = document.getElementById('slots-list-container');
+      if (pContainer) {
+        pContainer.innerHTML = appConfig.platforms.map((p, i) => `
+          <div style="display:flex; justify-content:space-between; align-items:center; background:var(--surface-raised); padding: 6px 12px; border-radius: var(--r-sm, 4px);">
+            <span class="fw-bold">${p}</span>
+            <button class="btn btn-ghost text-danger" style="height:22px; padding:0 6px;" onclick="removePlatformOption(${i})">Delete</button>
+          </div>
+        `).join('');
+      }
+      if (sContainer) {
+        sContainer.innerHTML = appConfig.slots.map((s, i) => `
+          <div style="display:flex; justify-content:space-between; align-items:center; background:var(--surface-raised); padding: 6px 12px; border-radius: var(--r-sm, 4px);">
+            <span class="fw-bold">${s}</span>
+            <button class="btn btn-ghost text-danger" style="height:22px; padding:0 6px;" onclick="removeSlotOption(${i})">Delete</button>
+          </div>
+        `).join('');
+      }
+    }
+
+    async function addPlatformOption() {
+      const input = document.getElementById('new-platform-input');
+      const val = (input.value || '').trim();
+      if (!val) return;
+      if (!appConfig.platforms.includes(val)) {
+        appConfig.platforms.push(val);
+        await saveConfigToServer('platforms', appConfig.platforms);
+        input.value = '';
+      }
+    }
+
+    async function removePlatformOption(index) {
+      appConfig.platforms.splice(index, 1);
+      await saveConfigToServer('platforms', appConfig.platforms);
+    }
+
+    async function addSlotOption() {
+      const input = document.getElementById('new-slot-input');
+      const val = (input.value || '').trim();
+      if (!val) return;
+      if (!appConfig.slots.includes(val)) {
+        appConfig.slots.push(val);
+        await saveConfigToServer('slots', appConfig.slots);
+        input.value = '';
+      }
+    }
+
+    async function removeSlotOption(index) {
+      appConfig.slots.splice(index, 1);
+      await saveConfigToServer('slots', appConfig.slots);
+    }
+
+    async function saveConfigToServer(key, items) {
+      showSpinner();
+      try {
+        await fetch('/api/config/update', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ key, items })
+        });
+        populateDropdownOptions();
+        renderConfigLists();
+      } finally { hideSpinner(); }
+    }
+
+    function switchTab(name) {
+      ['dashboard','inventory','sview','payout','scammers','config','danger'].forEach(t => {
+        document.getElementById(`view-${t}`).style.display = (t === name) ? 'block' : 'none';
+        document.getElementById(`nav-${t}`).classList.toggle('active', t === name);
+      });
+
+      const meta = tabMeta[name];
+      document.getElementById('toolbar-title').textContent = meta.title;
+      document.getElementById('toolbar-sub').textContent   = meta.sub;
+
+      // Per-tab toolbar actions
+      const actions = document.getElementById('toolbar-actions');
+      if (name === 'dashboard') {
+        actions.innerHTML = `<button class="btn btn-default refresh-btn" onclick="fetchMetrics(this)"><i class="fa-solid fa-arrows-rotate"></i> Refresh</button>`;
+      } else if (name === 'inventory' || name === 'sview') {
+        actions.innerHTML = `
+          <button class="btn btn-primary" id="btn-bulk-save" style="display:none;" onclick="bulkSavePendingChanges()"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button>
+          <button class="btn btn-primary" onclick="openManualModal()"><i class="fa-solid fa-plus"></i> Add Manual</button>
+          <button class="btn btn-default refresh-btn" onclick="fetchInventory(this)"><i class="fa-solid fa-arrows-rotate"></i> Refresh</button>`;
+        updateBulkSaveButton();
+      } else if (name === 'scammers') {
+        actions.innerHTML = `<button class="btn btn-default refresh-btn" onclick="fetchScammers(this)"><i class="fa-solid fa-arrows-rotate"></i> Refresh</button>`;
+      } else if (name === 'config') {
+        actions.innerHTML = `<button class="btn btn-default refresh-btn" onclick="loadAppConfig(this)"><i class="fa-solid fa-arrows-rotate"></i> Refresh Config</button>`;
+      } else {
+        actions.innerHTML = '';
+      }
+
+      if (name === 'dashboard') fetchMetrics();
+      if (name === 'inventory' || name === 'sview') fetchInventory();
+      if (name === 'scammers')  fetchScammers();
+      if (name === 'config')    loadAppConfig();
+    }
+
+    /* ── Status helper ── */
+    function statusDot(s) {
+      return `<span class="status-dot ${s}"><span class="dot"></span>${s}</span>`;
+    }
+
+    /* ═══════════════════════════════
+       DASHBOARD
+       ═══════════════════════════════ */
+    let allInventoryData = [];
+    let configLoaded = false;
+
+    async function fetchMetrics(btnEl) {
+      if (btnEl) btnEl.classList.add('spinning');
+      showSpinner('Loading metrics...');
+      try {
+        const data = await fetch('/api/metrics').then(r => r.json());
+
+        document.getElementById('metric-today-codes').textContent     = data.today_codes;
+        document.getElementById('metric-total-payout').textContent    = `₹${data.total_payout.toLocaleString()}`;
+        document.getElementById('metric-payout-breakdown').textContent = `₹${data.term_6_total.toLocaleString()} / ₹${data.term_1_total.toLocaleString()}`;
+        document.getElementById('metric-unique-upis').textContent     = `${data.unique_upis} / ${data.unique_suppliers}`;
+        document.getElementById('metric-unpaid-cnt').textContent      = data.total_unpaid;
+        document.getElementById('metric-listed-cnt').textContent      = data.total_listed;
+        document.getElementById('metric-sold-cnt').textContent        = data.total_sold;
+
+        const tbody = document.getElementById('today-codes-table-body');
+        tbody.innerHTML = '';
+        if (data.today_list && data.today_list.length > 0) {
+          data.today_list.forEach(item => {
+            const codes = (item.gift_card_code || '').split(',').map(c => c.trim()).filter(Boolean);
+            const codesHTML = `<div class="codes-list">${codes.map((c,i) => `<span class="code-pill"><span class="pill-idx">#${i+1}</span>${c}</span>`).join('')}</div>`;
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td class="mono">${item.created_at_str}</td>
+              <td class="fw-bold">${item.phone_number || '—'}</td>
+              <td>${item.gift_card_name || '—'}</td>
+              <td>${codesHTML}</td>
+              <td class="mono">${item.payment_details || '—'}</td>
+              <td class="fw-bold">${item.currency || 'Rs.'}${item.total_amount}</td>
+              <td>${statusDot(item.status)}</td>
+            `;
+            tbody.appendChild(tr);
+          });
+        } else {
+          tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:var(--subtle);padding:clamp(12px,1.5vh,20px);">No codes received today yet.</td></tr>`;
+        }
+      } finally {
+        hideSpinner();
+        if (btnEl) setTimeout(() => btnEl.classList.remove('spinning'), 400);
+      }
+    }
+
+    /* ═══════════════════════════════
+       INVENTORY
+       ═══════════════════════════════ */
+    async function fetchInventory(btnEl) {
+      if (btnEl) btnEl.classList.add('spinning');
+      showSpinner('Loading inventory...');
+      try {
+        const promises = [fetch('/api/inventory').then(r => r.json())];
+        if (!configLoaded) {
+          promises.push(fetch('/api/config').then(r => r.json()));
+        }
+        const results = await Promise.all(promises);
+        allInventoryData = results[0];
+        if (results[1]) {
+          appConfig = results[1];
+          populateDropdownOptions();
+          renderConfigLists();
+          configLoaded = true;
+        }
+        applyInventoryFilters();
+        applySViewFilters();
+      } finally {
+        hideSpinner();
+        if (btnEl) setTimeout(() => btnEl.classList.remove('spinning'), 400);
+      }
+    }
+
+    function renderSViewTable(data) {
+      const tbody = document.getElementById('sview-table-body');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      if (!data || data.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:var(--subtle);padding:clamp(12px,1.5vh,20px);">No records match the filter.</td></tr>`;
+        return;
+      }
+
+      data.forEach(item => {
+        const codes = (item.gift_card_code || '').split(',').map(c => c.trim()).filter(Boolean);
+        const codesHTML = codes.length
+          ? `<div class="codes-list">${codes.map(c => `<div class="code-row"><span class="code-pill ${item.is_scammer ? 'scammer' : ''}">${c}</span><button class="copy-code-btn" title="Copy code" onclick="copyToClipboard(this, '${c.replace(/'/g, "\\'")}')"><i class="fa-regular fa-copy"></i></button></div>`).join('')}</div>`
+          : `<span class="text-muted">—</span>`;
+
+        const tr = document.createElement('tr');
+        const isPaid = String(item.status || '').toLowerCase() === 'paid';
+        const isFast = Number(item.payout_term_days) === 1;
+        const isOlder24 = (item.age_hours || 0) >= 24;
+
+        if (item.in_old_db) {
+          tr.style.background = 'rgba(153, 27, 27, 0.35)'; // Dark Red for Found in Old DB
+        } else if (item.is_scammer) {
+          tr.style.background = 'rgba(239, 68, 68, 0.15)'; // Red for scammer
+        } else if (isPaid) {
+          tr.style.background = 'rgba(59, 130, 246, 0.15)'; // Blue for paid
+        } else if (isOlder24) {
+          tr.style.background = 'rgba(249, 115, 22, 0.15)'; // Orangish for >24h old
+        } else if (isFast) {
+          tr.style.background = 'rgba(245, 158, 11, 0.15)'; // Yellowish for fast payment
+        }
+
+        const curPlatform = item.platform || 'test1';
+        const platformOptionsHTML = appConfig.platforms.map(p => `<option value="${p}" ${p === curPlatform ? 'selected' : ''}>${p}</option>`).join('');
+
+        const curSlot = item.slot || 'test1';
+        const slotOptionsHTML = appConfig.slots.map(s => `<option value="${s}" ${s === curSlot ? 'selected' : ''}>${s}</option>`).join('');
+
+        const curCStatus = item.c_status || 'ununsold';
+        const curCardName = item.gift_card_name || PREDEFINED_CARD_NAMES[0];
+        const cardNameOptionsHTML = PREDEFINED_CARD_NAMES.map(c => `<option value="${c}" ${c === curCardName ? 'selected' : ''}>${c}</option>`).join('');
+        const cardBadge = getCardNameBadge(curCardName);
+
+        const oldDbBadge = item.in_old_db ? `<span class="badge" style="background:#991b1b;color:#ffffff;font-size:10px;padding:2px 6px;margin-left:4px;" title="Found in Gift Card Sheet New - 1 , 2 May.csv"><i class="fa-solid fa-triangle-exclamation"></i> Found in Old DB</span>` : '';
+
+        tr.innerHTML = `
+          <td class="mono fw-bold">
+            <input
+              type="text"
+              class="filter-input"
+              style="width:clamp(90px,9vw,130px);height:clamp(20px,2vh,26px);padding:0 6px;font-size:clamp(9.5px,0.65vw,11.5px);"
+              placeholder="+ Order ID"
+              value="${item.order_id || ''}"
+              oninput="stageChange(${item.id}, '${item.row_source}', 'order_id', this.value)"
+            />
+          </td>
+          <td>${cardBadge}${oldDbBadge}</td>
+          <td>${codesHTML}</td>
+          <td>
+            <select class="status-select" onchange="stageChange(${item.id}, '${item.row_source}', 'platform', this.value)">
+              ${platformOptionsHTML}
+            </select>
+          </td>
+          <td>
+            <select class="status-select" onchange="stageChange(${item.id}, '${item.row_source}', 'slot', this.value)">
+              ${slotOptionsHTML}
+            </select>
+          </td>
+          <td>
+            <select
+              class="status-select"
+              onchange="stageChange(${item.id}, '${item.row_source}', 'c_status', this.value)"
+              data-current="${curCStatus}"
+            >
+              <option value="ununsold" ${curCStatus==='ununsold' ? 'selected':''}>Ununsold</option>
+              <option value="listed"   ${curCStatus==='listed'   ? 'selected':''}>Listed</option>
+              <option value="sold"     ${curCStatus==='sold'     ? 'selected':''}>Sold</option>
+              <option value="rejected" ${curCStatus==='rejected' ? 'selected':''}>Rejected</option>
+            </select>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function applySViewFilters() {
+      if (!allInventoryData) return;
+      const searchEl = document.getElementById('sview-search');
+      const cardEl = document.getElementById('sview-card-name');
+      const platformEl = document.getElementById('sview-platform');
+      const slotEl = document.getElementById('sview-slot');
+      const statusEl = document.getElementById('sview-status');
+
+      const queryRaw = searchEl ? searchEl.value.trim() : '';
+      const query = queryRaw.toLowerCase();
+      const cardFilter = cardEl ? cardEl.value.trim() : '';
+      const platFilter = platformEl ? platformEl.value : '';
+      const slotFilter = slotEl ? slotEl.value : '';
+      const cstatusFilter = statusEl ? statusEl.value.trim().toLowerCase() : '';
+
+      let filtered = allInventoryData.filter(item => {
+        if (cardFilter && String(item.gift_card_name || '').trim() !== cardFilter) return false;
+        if (platFilter && String(item.platform || 'test1') !== platFilter) return false;
+        if (slotFilter && String(item.slot || 'test1') !== slotFilter) return false;
+        if (cstatusFilter && String(item.c_status || 'ununsold').toLowerCase().trim() !== cstatusFilter) return false;
+
+        if (query) {
+          const c = String(item.gift_card_code || '').toLowerCase();
+          const n = String(item.gift_card_name || '').toLowerCase();
+          const ord = String(item.order_id || '').toLowerCase();
+          if (!c.includes(query) && !n.includes(query) && !ord.includes(query)) return false;
+        }
+        return true;
+      });
+
+      // Default sorting in S-View: A-Z with respect to Card Name (Paid items at bottom)
+      filtered.sort((a, b) => {
+        const isPaidA = String(a.status || '').toLowerCase() === 'paid' ? 1 : 0;
+        const isPaidB = String(b.status || '').toLowerCase() === 'paid' ? 1 : 0;
+
+        if (isPaidA !== isPaidB) {
+          return isPaidA - isPaidB; // Paid items (1) go after unpaid items (0)
+        }
+
+        const nameA = String(a.gift_card_name || '').toLowerCase();
+        const nameB = String(b.gift_card_name || '').toLowerCase();
+        if (nameA !== nameB) {
+          return nameA.localeCompare(nameB);
+        }
+
+        const da = a.created_at_iso ? new Date(a.created_at_iso).getTime() : 0;
+        const db = b.created_at_iso ? new Date(b.created_at_iso).getTime() : 0;
+        return db - da;
+      });
+
+      renderSViewTable(filtered);
+    }
+
+    function clearSViewFilters() {
+      if (document.getElementById('sview-search'))    document.getElementById('sview-search').value = '';
+      if (document.getElementById('sview-card-name')) document.getElementById('sview-card-name').value = '';
+      if (document.getElementById('sview-platform'))  document.getElementById('sview-platform').value = '';
+      if (document.getElementById('sview-slot'))      document.getElementById('sview-slot').value = '';
+      if (document.getElementById('sview-status'))    document.getElementById('sview-status').value = '';
+      applySViewFilters();
+    }
+
+    function clearFilters() {
+      if (document.getElementById('filter-search'))   document.getElementById('filter-search').value = '';
+      if (document.getElementById('filter-field'))    document.getElementById('filter-field').value  = 'all';
+      if (document.getElementById('filter-platform')) document.getElementById('filter-platform').value = '';
+      if (document.getElementById('filter-slot'))     document.getElementById('filter-slot').value = '';
+      if (document.getElementById('filter-status'))   document.getElementById('filter-status').value = '';
+      if (document.getElementById('filter-term'))     document.getElementById('filter-term').value   = '';
+      if (document.getElementById('filter-sort'))     document.getElementById('filter-sort').value   = 'date';
+      applyInventoryFilters();
+    }
+
+    function renderInventoryTable(data) {
+      const tbody = document.getElementById('inventory-table-body');
+      tbody.innerHTML = '';
+
+      if (!data || data.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="12" style="text-align:center;color:var(--subtle);padding:clamp(12px,1.5vh,20px);">No records match the filter.</td></tr>`;
+        return;
+      }
+
+      data.forEach(item => {
+        const isFast = Number(item.payout_term_days) === 1;
+        const termBadge = isFast
+          ? `<span class="badge badge-yellow" title="Fast Payment (1 Day)"><i class="fa-solid fa-bolt"></i> Fast</span>`
+          : `<span class="badge badge-old" title="Normal Payment (6 Days)">Normal</span>`;
+        const tagBadge = item.is_new
+          ? `<span class="badge badge-new">New</span>`
+          : `<span class="badge badge-old">Old</span>`;
+
+        const codes = (item.gift_card_code || '').split(',').map(c => c.trim()).filter(Boolean);
+        const codesHTML = codes.length
+          ? `<div class="codes-list">${codes.map(c => `<div class="code-row"><span class="code-pill ${item.is_scammer ? 'scammer' : ''}">${c}</span><button class="copy-code-btn" title="Copy code" onclick="copyToClipboard(this, '${c.replace(/'/g, "\\'")}')"><i class="fa-regular fa-copy"></i></button></div>`).join('')}</div>`
+          : `<span class="text-muted">—</span>`;
+
+        const tr = document.createElement('tr');
+        const isPaid = String(item.status || '').toLowerCase() === 'paid';
+        const isOlder24 = (item.age_hours || 0) >= 24;
+
+        if (item.in_old_db) {
+          tr.style.background = 'rgba(153, 27, 27, 0.35)'; // Dark Red for Found in Old DB
+        } else if (item.is_scammer) {
+          tr.style.background = 'rgba(239, 68, 68, 0.15)'; // Red for scammer
+        } else if (isPaid) {
+          tr.style.background = 'rgba(59, 130, 246, 0.15)'; // Blue for paid
+        } else if (isOlder24) {
+          tr.style.background = 'rgba(249, 115, 22, 0.15)'; // Orangish for >24h old
+        } else if (isFast) {
+          tr.style.background = 'rgba(245, 158, 11, 0.15)'; // Yellowish for fast payment
+        }
+
+        const curCStatus = item.c_status || 'ununsold';
+        const cardBadge = getCardNameBadge(item.gift_card_name);
+        const oldDbBadge = item.in_old_db ? `<span class="badge" style="background:#991b1b;color:#ffffff;font-size:10px;padding:2px 6px;margin-left:4px;" title="Found in Gift Card Sheet New - 1 , 2 May.csv"><i class="fa-solid fa-triangle-exclamation"></i> Found in Old DB</span>` : '';
+
+        tr.innerHTML = `
+          <td>${tagBadge}</td>
+          <td>${termBadge}</td>
+          <td class="mono">${item.created_at_str}</td>
+          <td>${statusDot(curCStatus)}</td>
+          <td class="fw-bold" style="${item.is_scammer ? 'color:var(--danger);' : ''}">${item.phone_number || '—'}</td>
+          <td>${cardBadge}${oldDbBadge}</td>
+          <td>${codesHTML}</td>
+          <td class="mono" style="max-width:clamp(100px,12vw,160px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${item.payment_details || ''}">${item.payment_details || '—'}</td>
+          <td class="fw-bold">${item.currency || 'Rs.'}${item.total_amount}</td>
+          <td>
+            <select
+              class="status-select"
+              onchange="stageChange(${item.id}, '${item.row_source}', 'status', this.value)"
+              data-current="${item.status || 'unpaid'}"
+            >
+              <option value="unpaid" ${item.status==='unpaid' ? 'selected':''}>Unpaid</option>
+              <option value="paid"   ${item.status==='paid'   ? 'selected':''}>Paid</option>
+            </select>
+          </td>
+          <td>
+            <div style="display:flex;align-items:center;gap:clamp(4px,0.35vw,6px);">
+              <button
+                class="btn btn-ghost"
+                style="height:clamp(20px,2vh,26px);padding:0 clamp(6px,0.55vw,9px);flex-shrink:0;"
+                title="View full details"
+                onclick="openAuditModal(${item.id}, '${item.row_source}')"
+              >
+                <i class="fa-solid fa-eye"></i>
+              </button>
+              <button
+                class="btn btn-ghost"
+                style="height:clamp(20px,2vh,26px);padding:0 clamp(6px,0.55vw,9px);flex-shrink:0;"
+                title="Edit submission details"
+                onclick="openEditModal(${item.id}, '${item.row_source}')"
+              >
+                <i class="fa-solid fa-pen-to-square"></i>
+              </button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function applyInventoryFilters() {
+      if (!allInventoryData) return;
+      const searchEl = document.getElementById('filter-search');
+      const fieldEl = document.getElementById('filter-field');
+      const platformEl = document.getElementById('filter-platform');
+      const slotEl = document.getElementById('filter-slot');
+      const statusEl = document.getElementById('filter-status');
+      const termEl = document.getElementById('filter-term');
+      const sortEl = document.getElementById('filter-sort');
+
+      const queryRaw = searchEl ? searchEl.value.trim() : '';
+      const query = queryRaw.toLowerCase();
+      const queryClean = queryRaw.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+      const field = fieldEl ? fieldEl.value : 'all';
+      const platFilter = platformEl ? platformEl.value : '';
+      const slotFilter = slotEl ? slotEl.value : '';
+      const status = statusEl ? statusEl.value.trim().toLowerCase() : '';
+      const term = termEl ? termEl.value : '';
+      const sortMode = sortEl ? sortEl.value : 'date';
+
+      let filtered = allInventoryData.filter(item => {
+        // Platform filter
+        if (platFilter && String(item.platform || 'test1') !== platFilter) {
+          return false;
+        }
+
+        // Slot filter
+        if (slotFilter && String(item.slot || 'test1') !== slotFilter) {
+          return false;
+        }
+
+        // Status filter
+        if (status) {
+          const itemStatus = String(item.status || '').toLowerCase().trim();
+          if (itemStatus !== status) {
+            return false;
+          }
+        }
+
+        // Payout Term filter
+        if (term) {
+          if (String(item.payout_term_days || 6) !== String(term)) {
+            return false;
+          }
+        }
+
+        // Text query filter
+        if (query) {
+          const p = String(item.phone_number || '').toLowerCase();
+          const pClean = p.replace(/[^a-zA-Z0-9]/g, '');
+          const u = String(item.payment_details || '').toLowerCase();
+          const uClean = u.replace(/[^a-zA-Z0-9]/g, '');
+          const c = String(item.gift_card_code || '').toLowerCase();
+          const n = String(item.gift_card_name || '').toLowerCase();
+          const ord = String(item.order_id || '').toLowerCase();
+
+          const matchPhone = p.includes(query) || (queryClean.length > 0 && pClean.includes(queryClean));
+          const matchUpi   = u.includes(query) || (queryClean.length > 0 && uClean.includes(queryClean));
+          const matchCode  = c.includes(query) || (queryClean.length > 0 && c.replace(/[^a-zA-Z0-9]/g, '').includes(queryClean));
+          const matchName  = n.includes(query);
+          const matchOrder = ord.includes(query);
+
+          if (field === 'order_id') {
+            if (!matchOrder) return false;
+          } else if (field === 'phone') {
+            if (!matchPhone) return false;
+          } else if (field === 'upi') {
+            if (!matchUpi) return false;
+          } else if (field === 'code') {
+            if (!matchCode) return false;
+          } else {
+            if (!matchOrder && !matchPhone && !matchUpi && !matchCode && !matchName) return false;
+          }
+        }
+
+        return true;
+      });
+
+      // Grouping / Sorting: Always force 'paid' items to bottom
+      const isPhoneSort = (sortMode === 'phone') || (field === 'phone');
+      const isUpiSort   = (sortMode === 'upi')   || (field === 'upi');
+
+      filtered.sort((a, b) => {
+        const isPaidA = String(a.status || '').toLowerCase() === 'paid' ? 1 : 0;
+        const isPaidB = String(b.status || '').toLowerCase() === 'paid' ? 1 : 0;
+
+        if (isPaidA !== isPaidB) {
+          return isPaidA - isPaidB; // Paid items (1) stay below non-paid items (0)
+        }
+
+        if (isPhoneSort) {
+          const rawA = String(a.phone_number || '').trim();
+          const rawB = String(b.phone_number || '').trim();
+          const ka = rawA.replace(/[^0-9]/g, '') || rawA.toLowerCase();
+          const kb = rawB.replace(/[^0-9]/g, '') || rawB.toLowerCase();
+          if (ka !== kb) return ka.localeCompare(kb);
+        } else if (isUpiSort) {
+          const ka = String(a.payment_details || '').toLowerCase().trim();
+          const kb = String(b.payment_details || '').toLowerCase().trim();
+          if (ka !== kb) return ka.localeCompare(kb);
+        }
+
+        const da = a.created_at_iso ? new Date(a.created_at_iso).getTime() : 0;
+        const db = b.created_at_iso ? new Date(b.created_at_iso).getTime() : 0;
+        return db - da;
+      });
+
+      renderInventoryTable(filtered);
+    }
+
+    function clearFilters() {
+      if (document.getElementById('filter-search'))   document.getElementById('filter-search').value = '';
+      if (document.getElementById('filter-field'))    document.getElementById('filter-field').value  = 'all';
+      if (document.getElementById('filter-platform')) document.getElementById('filter-platform').value = '';
+      if (document.getElementById('filter-slot'))     document.getElementById('filter-slot').value = '';
+      if (document.getElementById('filter-status'))   document.getElementById('filter-status').value = '';
+      if (document.getElementById('filter-term'))     document.getElementById('filter-term').value   = '';
+      if (document.getElementById('filter-sort'))     document.getElementById('filter-sort').value   = 'date';
+      applyInventoryFilters();
+    }
+
+    async function updateStatus(id, status, source) {
+      source = source || 'submission';
+      showSpinner();
+      try {
+        await fetch('/api/submission/update-status', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id, status, source })
+        });
+        await fetchInventory();
+      } finally { hideSpinner(); }
+    }
+
+    async function updatePlatform(id, platform, source) {
+      source = source || 'submission';
+      showSpinner();
+      try {
+        await fetch('/api/submission/update-platform', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id, platform, source })
+        });
+        await fetchInventory();
+      } finally { hideSpinner(); }
+    }
+
+    async function updateSlot(id, slot, source) {
+      source = source || 'submission';
+      showSpinner();
+      try {
+        await fetch('/api/submission/update-slot', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id, slot, source })
+        });
+        await fetchInventory();
+      } finally { hideSpinner(); }
+    }
+
+    async function updateOrderId(id, order_id, source) {
+      source = source || 'submission';
+      showSpinner();
+      try {
+        await fetch('/api/submission/update-order-id', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id, order_id, source })
+        });
+        await fetchInventory();
+      } finally { hideSpinner(); }
+    }
+
+    /* ═══════════════════════════════
+       AUDIT MODAL
+       ═══════════════════════════════ */
+    async function openAuditModal(id, source) {
+      source = source || 'submission';
+      document.getElementById('modal-audit-details').classList.add('open');
+      document.getElementById('audit-details-content').innerHTML = `<div style="text-align:center;color:var(--subtle);padding:clamp(16px,2vh,24px);">Loading...</div>`;
+      showSpinner();
+      try {
+        const json = await fetch(`/api/submission/details?id=${id}&source=${source}`).then(r => r.json());
+        hideSpinner();
+        if (!json.success || !json.data) {
+          document.getElementById('audit-details-content').innerHTML = `<div class="text-danger">Failed to load details.</div>`;
+          return;
+        }
+        const d = json.data;
+        const isScammer = source === 'scammer';
+        document.getElementById('audit-details-content').innerHTML = `
+          ${isScammer ? `<div style="background:var(--danger-bg);border:1px solid rgba(220,38,38,0.2);border-radius:var(--r-md);padding:8px 12px;margin-bottom:10px;font-size:clamp(10px,0.7vw,12px);color:var(--danger);font-weight:600;">Flagged Scammer Record</div>` : ''}
+          <div class="audit-grid">
+            <div class="audit-row"><span class="audit-key">Record ID</span><span class="audit-val">#${d.id}</span></div>
+            <div class="audit-row"><span class="audit-key">Order ID</span><span class="audit-val">${d.order_id || '—'}</span></div>
+            <div class="audit-row"><span class="audit-key">Platform</span><span class="audit-val">${d.platform || 'test1'}</span></div>
+            <div class="audit-row"><span class="audit-key">Slot</span><span class="audit-val">${d.slot || 'test1'}</span></div>
+            <div class="audit-row"><span class="audit-key">Status</span><span class="audit-val">${statusDot(d.status || 'rejected')}</span></div>
+            <div class="audit-row"><span class="audit-key">Phone</span><span class="audit-val">${d.phone_number || '—'}</span></div>
+            <div class="audit-row"><span class="audit-key">Gift Card</span><span class="audit-val">${d.gift_card_name || '—'}</span></div>
+            <div class="audit-row"><span class="audit-key">Amount</span><span class="audit-val">${d.total_amount ? (d.currency || 'Rs.') + d.total_amount : '—'}</span></div>
+            <div class="audit-row"><span class="audit-key">Payout Term</span><span class="audit-val">${d.payout_term_days ? d.payout_term_days + ' Days' : '—'}</span></div>
+            <div class="audit-row"><span class="audit-key">Submitted</span><span class="audit-val">${d.created_at_str}</span></div>
+          </div>
+          <div style="margin-bottom:clamp(8px,0.8vh,12px);">
+            <div class="section-label">Payment Destination / UPI</div>
+            <div class="code-block">${d.payment_details || '—'}</div>
+          </div>
+          <div style="margin-bottom:clamp(8px,0.8vh,12px);">
+            <div class="section-label">${isScammer ? 'Flagged Code' : 'Extracted Codes'}</div>
+            <div class="code-block">${d.gift_card_code || '—'}</div>
+          </div>
+          <div>
+            <div class="section-label">${isScammer ? 'Flag Reason' : 'Raw Message Log'}</div>
+            <div class="code-block" style="opacity:0.85;">${d.raw_message || '—'}</div>
+          </div>
+          <div style="margin-top:clamp(12px,1.5vh,18px);display:flex;justify-content:flex-end;">
+            <button class="btn btn-danger" onclick="deleteRecordFromAudit(${d.id}, '${source}')">
+              <i class="fa-solid fa-trash"></i> Move to Bin (Delete)
+            </button>
+          </div>
+        `;
+      } catch(e) {
+        hideSpinner();
+        document.getElementById('audit-details-content').innerHTML = `<div class="text-danger">Error loading data.</div>`;
+      }
+    }
+
+    async function deleteRecordFromAudit(id, source) {
+      if (!confirm('Are you sure you want to delete this record and move it to bin?')) return;
+      showSpinner('Moving to bin...');
+      try {
+        await fetch('/api/submission/delete', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id, source })
+        });
+        closeAuditModal();
+        hideSpinner('Moved to bin!');
+        await fetchInventory();
+      } catch(e) {
+        console.error('Delete failed', e);
+        hideSpinner('Delete failed!');
+      }
+    }
+
+    function closeAuditModal()  { document.getElementById('modal-audit-details').classList.remove('open'); }
+
+    /* ═══════════════════════════════
+       EDIT MODAL
+       ═══════════════════════════════ */
+    async function openEditModal(id, source) {
+      source = source || 'submission';
+      showSpinner();
+      try {
+        await loadAppConfig();
+        const json = await fetch(`/api/submission/details?id=${id}&source=${source}`).then(r => r.json());
+        if (!json.success || !json.data) {
+          alert('Failed to load record details for editing.');
+          return;
+        }
+        const d = json.data;
+        document.getElementById('edit-id').value = id;
+        document.getElementById('edit-source').value = source;
+        document.getElementById('edit-order-id').value = d.order_id || '';
+        document.getElementById('edit-phone').value = d.phone_number || '';
+        document.getElementById('edit-created-at').value = d.created_at_str || '';
+        document.getElementById('edit-card-name').value = d.gift_card_name || '';
+        document.getElementById('edit-codes').value = d.gift_card_code || '';
+        document.getElementById('edit-upi').value = d.payment_details || '';
+        document.getElementById('edit-amount').value = d.total_amount || 0;
+        document.getElementById('edit-currency').value = d.currency || 'Rs.';
+        document.getElementById('edit-payout-term').value = String(d.payout_term_days || 6);
+        document.getElementById('edit-card-type').value = String(d.card_type || 'NEW').toUpperCase();
+        document.getElementById('edit-platform').value = d.platform || 'test1';
+        document.getElementById('edit-slot').value = d.slot || 'test1';
+        document.getElementById('edit-status').value = d.status || 'unpaid';
+
+        document.getElementById('modal-edit-entry').classList.add('open');
+      } catch (e) {
+        alert('Error fetching details.');
+      } finally {
+        hideSpinner();
+      }
+    }
+
+    function closeEditModal() {
+      document.getElementById('modal-edit-entry').classList.remove('open');
+    }
+
+    async function saveEditRecord() {
+      const id = document.getElementById('edit-id').value;
+      const source = document.getElementById('edit-source').value;
+      const orderId = document.getElementById('edit-order-id').value;
+      const phone = document.getElementById('edit-phone').value;
+      const createdAt = document.getElementById('edit-created-at').value;
+      const cardName = document.getElementById('edit-card-name').value;
+      const codes = document.getElementById('edit-codes').value;
+      const upi = document.getElementById('edit-upi').value;
+      const amount = document.getElementById('edit-amount').value;
+      const currency = document.getElementById('edit-currency').value;
+      const payoutTerm = document.getElementById('edit-payout-term').value;
+      const cardType = document.getElementById('edit-card-type').value;
+      const platform = document.getElementById('edit-platform').value;
+      const slot = document.getElementById('edit-slot').value;
+      const status = document.getElementById('edit-status').value;
+
+      showSpinner();
+      try {
+        const res = await fetch('/api/submission/edit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            id: parseInt(id),
+            source: source,
+            order_id: orderId,
+            phone_number: phone,
+            created_at: createdAt,
+            gift_card_name: cardName,
+            gift_card_code: codes,
+            payment_details: upi,
+            total_amount: parseFloat(amount) || 0,
+            currency: currency,
+            payout_term_days: parseInt(payoutTerm) || 6,
+            card_type: cardType,
+            platform: platform,
+            slot: slot,
+            status: status
+          })
+        }).then(r => r.json());
+
+        if (res.success) {
+          closeEditModal();
+          await fetchInventory();
+        } else {
+          alert(res.error || 'Failed to update record.');
+        }
+      } finally {
+        hideSpinner();
+      }
+    }
+
+    /* ═══════════════════════════════
+       MANUAL ENTRY
+       ═══════════════════════════════ */
+    async function openManualModal() {
+      await loadAppConfig();
+      document.getElementById('modal-manual-entry').classList.add('open');
+    }
+    function closeManualModal() { document.getElementById('modal-manual-entry').classList.remove('open'); }
+
+    async function submitManualCode() {
+      const orderId  = document.getElementById('manual-order-id').value;
+      const phone    = document.getElementById('manual-phone').value;
+      const cardName = document.getElementById('manual-card-name').value;
+      const codesRaw = document.getElementById('manual-codes').value;
+      const upi      = document.getElementById('manual-upi').value;
+      const amount   = document.getElementById('manual-amount').value;
+      const platform = document.getElementById('manual-platform').value;
+      const slot     = document.getElementById('manual-slot').value;
+      const codes    = codesRaw.split('\n').map(c => c.trim()).filter(Boolean);
+      if (!codes.length) { alert('Enter at least one gift card code.'); return; }
+      showSpinner();
+      try {
+        const data = await fetch('/api/submission/manual-create', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            order_id: orderId,
+            phone_number: phone,
+            gift_card_name: cardName,
+            gift_card_codes: codes,
+            payment_details: upi,
+            total_amount: parseFloat(amount) || 0,
+            platform: platform,
+            slot: slot
+          })
+        }).then(r => r.json());
+        alert(data.message || 'Saved.');
+        closeManualModal();
+        await fetchInventory();
+      } finally { hideSpinner(); }
+    }
+
+    /* ═══════════════════════════════
+       SCAMMERS
+       ═══════════════════════════════ */
+    async function fetchScammers() {
+      showSpinner();
+      try {
+        const data  = await fetch('/api/scammers').then(r => r.json());
+        const tbody = document.getElementById('scammers-table-body');
+        tbody.innerHTML = '';
+        if (!data.length) {
+          tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--subtle);padding:clamp(12px,1.5vh,20px);">No records found.</td></tr>`;
+          return;
+        }
+        data.forEach(item => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td class="mono">${item.created_at_str}</td>
+            <td class="fw-bold">${item.phone_number || '—'}</td>
+            <td class="mono">${item.payment_details || '—'}</td>
+            <td><span class="code-pill scammer">${item.flagged_code || '—'}</span></td>
+            <td class="text-danger fw-bold">${item.reason}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } finally { hideSpinner(); }
+    }
+
+    /* ═══════════════════════════════
+       PAYOUT EXPORT
+       ═══════════════════════════════ */
+    function downloadPayoutExcel() {
+      const days = document.getElementById('payout-days').value || 6;
+      window.location.href = `/api/export-payout?days=${days}`;
+    }
+
+    /* ═══════════════════════════════
+       DANGER ZONE
+       ═══════════════════════════════ */
+    async function resetAllData() {
+      const passkey = document.getElementById('danger-passkey').value;
+      if (!passkey) { alert('Passkey required.'); return; }
+      if (!confirm('This will permanently wipe ALL data. Confirm?')) return;
+      showSpinner();
+      try {
+        const data = await fetch('/api/danger/reset-db', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ passkey })
+        }).then(r => r.json());
+        if (data.success) {
+          alert('Database wiped successfully.');
+          document.getElementById('danger-passkey').value = '';
+          switchTab('dashboard');
+        } else {
+          alert(data.error || 'Reset failed.');
+        }
+      } finally { hideSpinner(); }
+    }
+
+    /* ─── Boot ─── */
+    loadAppConfig();
+    fetchMetrics();
+  </script>
+</body>
+</html>
