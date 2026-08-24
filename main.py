@@ -59,7 +59,7 @@ async def main():
 
     logger.info("Standalone Python AI Worker & Simple HTML Web App are fully operational!")
 
-    # Keep application running
+    # Keep application always running 
     while True:
         await asyncio.sleep(3600)
 
