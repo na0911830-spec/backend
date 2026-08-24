@@ -1,0 +1,25 @@
+<!-- ═══════════════════════
+     4. DUPLICATE INSPECTOR & RESOLUTION
+     ═══════════════════════ -->
+<section id="view-duplicates" style="display:none;">
+  <div class="panel">
+    <div class="panel-head">
+      <div class="panel-title">
+        <i class="fa-solid fa-clone" style="color:var(--primary);"></i> Duplicate Code Conflicts
+      </div>
+      <div class="panel-actions">
+        <button class="btn btn-default" style="height:clamp(20px,2vh,26px);font-size:clamp(9px,0.62vw,11px);"
+          onclick="fetchDuplicates()">
+          <svg><use href="#ic-refresh" /></svg> Refresh Duplicates
+        </button>
+      </div>
+    </div>
+    <div style="padding: clamp(10px,1.2vh,16px); background: rgba(239, 68, 68, 0.05); border-bottom: 1px solid var(--border); font-size: 13px; color: var(--subtle); display:flex; align-items:center; gap:8px;">
+      <i class="fa-solid fa-circle-info" style="color:var(--primary);"></i>
+      <span>Below are all duplicate gift card codes detected across entries. You can delete the specific code from one entry (preserving other codes in that submission) or delete the entire entry.</span>
+    </div>
+    <div id="duplicates-container" style="padding: clamp(12px,1.5vh,20px); display:flex; flex-direction:column; gap:16px;">
+      <div style="text-align:center;color:var(--subtle);padding:20px;">Scanning for duplicates...</div>
+    </div>
+  </div>
+</section>

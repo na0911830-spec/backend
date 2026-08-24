@@ -1,0 +1,42 @@
+<!-- ═══════════════════════
+     6. CONFIG PAGE
+     ═══════════════════════ -->
+<section id="view-config" style="display:none;">
+  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: clamp(12px,1.5vw,20px);">
+    <!-- Platform Config Card -->
+    <div class="panel">
+      <div class="panel-head">
+        <div class="panel-title"><svg>
+            <use href="#ic-hash" />
+          </svg> Platform Options</div>
+      </div>
+      <div style="padding: clamp(12px, 1.2vh, 18px); display:flex; flex-direction:column; gap: 12px;">
+        <div style="display:flex; gap: 8px;">
+          <input type="text" id="new-platform-input" class="filter-input" placeholder="Enter platform name...">
+          <button class="btn btn-primary" onclick="addPlatformOption()">Add</button>
+        </div>
+        <div id="platforms-list-container" style="display:flex; flex-direction:column; gap:6px;">
+          <!-- Dynamic items -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Slot Config Card -->
+    <div class="panel">
+      <div class="panel-head">
+        <div class="panel-title"><svg>
+            <use href="#ic-clock" />
+          </svg> Slot Options</div>
+      </div>
+      <div style="padding: clamp(12px, 1.2vh, 18px); display:flex; flex-direction:column; gap: 12px;">
+        <div style="display:flex; gap: 8px;">
+          <input type="text" id="new-slot-input" class="filter-input" placeholder="Enter slot name...">
+          <button class="btn btn-primary" onclick="addSlotOption()">Add</button>
+        </div>
+        <div id="slots-list-container" style="display:flex; flex-direction:column; gap:6px;">
+          <!-- Dynamic items -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

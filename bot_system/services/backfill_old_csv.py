@@ -1,4 +1,5 @@
 import logging
+import re
 from bot_system.db.connection import get_db_connection
 from bot_system.services.old_csv_checker import is_code_in_old_csv
 
@@ -15,7 +16,7 @@ def backfill_old_csv_flags():
             cursor.execute("SELECT id, gift_card_code FROM submissions WHERE in_old_db = 0 OR in_old_db IS NULL")
             subs = cursor.fetchall()
             for r in subs:
-                codes = [c.strip() for c in str(r.get("gift_card_code") or "").split(",") if c.strip()]
+                codes = [c.strip() for c in re.split(r'[\n,\s;]+', str(r.get("gift_card_code") or "")) if c.strip()]
                 if any(is_code_in_old_csv(c) for c in codes):
                     cursor.execute("UPDATE submissions SET in_old_db = 1 WHERE id = %s", (r["id"],))
                     updated_sub += 1
@@ -24,7 +25,7 @@ def backfill_old_csv_flags():
             cursor.execute("SELECT id, flagged_code FROM scammers WHERE in_old_db = 0 OR in_old_db IS NULL")
             scams = cursor.fetchall()
             for r in scams:
-                codes = [c.strip() for c in str(r.get("flagged_code") or "").split(",") if c.strip()]
+                codes = [c.strip() for c in re.split(r'[\n,\s;]+', str(r.get("flagged_code") or "")) if c.strip()]
                 if any(is_code_in_old_csv(c) for c in codes):
                     cursor.execute("UPDATE scammers SET in_old_db = 1 WHERE id = %s", (r["id"],))
                     updated_scam += 1

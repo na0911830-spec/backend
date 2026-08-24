@@ -1,0 +1,107 @@
+<!-- ═══════════════════════
+     2. CODES INVENTORY
+     ═══════════════════════ -->
+<section id="view-inventory" style="display:none;">
+  <div class="filter-bar">
+    <input type="text" id="filter-search" class="filter-input" placeholder="Search text / Order ID / Phone / Code..."
+      oninput="applyInventoryFilters()">
+    <input type="date" id="filter-date" class="filter-input" style="height:30px;padding:0 6px;"
+      onchange="applyInventoryFilters()" title="Filter by Date">
+    <select id="filter-field" class="filter-select" onchange="applyInventoryFilters()">
+      <option value="all">Search: All Fields</option>
+      <option value="order_id">Search: Order ID</option>
+      <option value="phone">Search: Phone No.</option>
+      <option value="upi">Search: UPI / Crypto</option>
+      <option value="code">Search: Code</option>
+    </select>
+    <select id="filter-platform" class="filter-select" onchange="applyInventoryFilters()">
+      <option value="">All Platforms</option>
+    </select>
+    <select id="filter-slot" class="filter-select" onchange="applyInventoryFilters()">
+      <option value="">All Slots</option>
+    </select>
+    <select id="filter-status" class="filter-select" onchange="applyInventoryFilters()">
+      <option value="">All Statuses (Unpaid, Paid...)</option>
+      <option value="unpaid">Unpaid</option>
+      <option value="listed">Listed</option>
+      <option value="sold">Sold</option>
+      <option value="paid">Paid</option>
+      <option value="rejected">Rejected</option>
+    </select>
+    <select id="filter-cstatus" class="filter-select" onchange="applyInventoryFilters()">
+      <option value="">All C-Statuses (Code Status)</option>
+      <option value="unsold">Unsold</option>
+      <option value="listed">Listed</option>
+      <option value="sold">Sold</option>
+      <option value="rejected">Rejected</option>
+    </select>
+    <select id="filter-term" class="filter-select" onchange="applyInventoryFilters()">
+      <option value="">All Terms (Fast &amp; Normal)</option>
+      <option value="1">Fast Payment (1 Day)</option>
+      <option value="6">Normal Payment (6 Days)</option>
+    </select>
+    <select id="filter-sort" class="filter-select" onchange="applyInventoryFilters()">
+      <option value="date">Sort: Date (Newest First)</option>
+      <option value="phone">Group By: Phone Number</option>
+      <option value="upi">Group By: UPI / Crypto Address</option>
+    </select>
+    <button class="btn btn-ghost" onclick="clearFilters()">Reset</button>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head">
+      <div class="panel-title">
+        <svg><use href="#ic-credit-card" /></svg>
+        Submissions
+        <span id="inventory-filtered-stats" style="font-size:11px;font-weight:normal;color:var(--muted);margin-left:8px;">
+          (<span id="inventory-entries-count">0</span> entries | <span id="inventory-codes-count">0</span> codes)
+        </span>
+      </div>
+      <div class="panel-actions">
+        <button class="btn btn-default" style="height:clamp(20px,2vh,26px);font-size:clamp(9px,0.62vw,11px);"
+          title="Copy all gift card codes from filtered results as comma separated list"
+          onclick="copyFilteredCodes('inventory', this)">
+          <i class="fa-regular fa-copy"></i> Copy Filtered Codes
+        </button>
+        <button id="inventory-bulk-status-btn" class="btn btn-default" style="height:clamp(20px,2vh,26px);font-size:clamp(9px,0.62vw,11px);display:none;"
+          onclick="openBulkStatusModal('inventory')">
+          <i class="fa-solid fa-list-check"></i> Bulk Update (<span id="inventory-selected-count">0</span>)
+        </button>
+        <button class="btn btn-primary btn-bulk-save-trigger" style="display:none;" onclick="bulkSavePendingChanges()">
+          <i class="fa-solid fa-floppy-disk"></i> Save Changes
+        </button>
+        <button class="btn btn-default" style="height:clamp(20px,2vh,26px);font-size:clamp(9px,0.62vw,11px);"
+          onclick="fetchInventory()">
+          <svg><use href="#ic-refresh" /></svg> Refresh
+        </button>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="width:32px;text-align:center;">
+              <input type="checkbox" id="inventory-select-all" onclick="toggleSelectAll('inventory', this.checked)" title="Select all filtered items">
+            </th>
+            <th>Tag</th>
+            <th>Type</th>
+            <th>Date &amp; Time</th>
+            <th>C-Status</th>
+            <th>Phone</th>
+            <th>Card Name</th>
+            <th>Codes</th>
+            <th>UPI / Crypto</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="inventory-table-body">
+          <tr>
+            <td colspan="11" style="text-align:center;color:var(--subtle);padding:clamp(12px,1.5vh,20px);">Loading...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

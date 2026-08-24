@@ -1,0 +1,110 @@
+<!-- ═══════════════════════
+     3. EXPORT PAYOUT (EXCEL WORKBOOK THEME)
+     ═══════════════════════ -->
+<section id="view-payout" style="display:none; flex-direction:column; gap:12px;">
+
+  <!-- Excel Ribbon Bar -->
+  <div class="excel-ribbon-card">
+    <div class="excel-ribbon-tab active"><i class="fa-solid fa-table"></i> Payout Workbook Export</div>
+    
+    <div class="excel-ribbon-controls">
+      <div class="excel-group">
+        <label class="excel-label"><i class="fa-regular fa-calendar"></i> Date Range Mode</label>
+        <div style="display:flex; gap:6px; align-items:center;">
+          <select id="payout-mode-select" class="excel-select" onchange="togglePayoutDateInputs()">
+            <option value="days">Offset Filter (e.g. 6 Days Ago)</option>
+            <option value="range">Custom Date Range</option>
+            <option value="all">All Pending Payouts</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="excel-group" id="payout-days-group">
+        <label class="excel-label">Days Offset</label>
+        <input type="number" id="payout-days" value="6" min="0" class="excel-input" style="width:80px;" oninput="previewPayoutData()">
+      </div>
+
+      <div class="excel-group" id="payout-range-group" style="display:none;">
+        <label class="excel-label">From - To Date</label>
+        <div style="display:flex; gap:4px; align-items:center;">
+          <input type="date" id="payout-start-date" class="excel-input" onchange="previewPayoutData()">
+          <span style="color:var(--muted); font-size:11px;">to</span>
+          <input type="date" id="payout-end-date" class="excel-input" onchange="previewPayoutData()">
+        </div>
+      </div>
+
+      <div class="excel-group">
+        <label class="excel-label"><i class="fa-solid fa-filter"></i> Search / Filter</label>
+        <input type="text" id="payout-preview-search" class="excel-input" placeholder="Search Phone / UPI / Code..." oninput="filterPayoutPreviewTable()">
+      </div>
+
+      <div class="excel-group" style="margin-left:auto; display:flex; align-items:flex-end; gap:8px;">
+        <button class="btn btn-ghost excel-btn" onclick="previewPayoutData()" title="Refresh live preview">
+          <i class="fa-solid fa-arrows-rotate"></i> Refresh
+        </button>
+        <button class="btn btn-success excel-export-btn" onclick="downloadPayoutExcel()">
+          <i class="fa-solid fa-file-excel"></i> Export Formatted Excel (.xlsx)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Excel Formula & Info Bar -->
+  <div class="excel-formula-bar">
+    <div class="excel-cell-name" id="excel-selected-cell">A1</div>
+    <div class="excel-fx"><i>fx</i></div>
+    <input type="text" id="excel-formula-input" class="excel-formula-input" readonly value="=SUM(PAYOUT_AMOUNT) GROUP_BY(PHONE_NUMBER)">
+    <div class="excel-stats-pill" id="excel-preview-stats">
+      <span class="excel-legend-dot" style="background:#ffd8d8;"></span> Repeated Phone
+      <span class="excel-legend-dot" style="background:#ffe8cc; margin-left:8px;"></span> Repeated UPI
+      <span class="excel-legend-dot" style="background:#d4edda; margin-left:8px;"></span> Sold
+      <span class="excel-legend-dot" style="background:#d1ecf1; margin-left:8px;"></span> Listed
+    </div>
+  </div>
+
+  <!-- Excel Spreadsheet Grid View -->
+  <div class="panel excel-sheet-panel">
+    <div class="table-container" style="max-height:calc(100vh - 280px); overflow:auto;">
+      <table class="data-table excel-grid-table" id="payout-preview-table">
+        <thead>
+          <tr class="excel-col-headers">
+            <th class="excel-row-header-th">#</th>
+            <th>A <span>Date</span></th>
+            <th>B <span>Phone Number</span></th>
+            <th>C <span>Supplier UPI / Pay</span></th>
+            <th>D <span>Order ID</span></th>
+            <th>E <span>Card Name</span></th>
+            <th>F <span>Gift Code</span></th>
+            <th>G <span>Code Status</span></th>
+            <th>H <span>Platform</span></th>
+            <th>I <span>Slot</span></th>
+            <th>J <span>Term</span></th>
+            <th style="text-align:right;">K <span>Amount (₹)</span></th>
+            <th>L <span>Status</span></th>
+          </tr>
+        </thead>
+        <tbody id="payout-preview-tbody">
+          <tr>
+            <td colspan="13" style="text-align:center; padding:30px; color:var(--muted);">
+              <i class="fa-solid fa-spinner fa-spin"></i> Loading payout preview...
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr class="excel-total-row" id="payout-preview-tfoot">
+            <td class="excel-row-num">Σ</td>
+            <td colspan="10" style="font-weight:700; text-align:right; text-transform:uppercase;">Grand Total Payout Due:</td>
+            <td id="excel-preview-total" style="text-align:right; font-weight:700; color:#107c41;">₹0.00</td>
+            <td></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <!-- Excel Bottom Sheet Tabs -->
+    <div class="excel-sheet-tabs-bar">
+      <div class="excel-tab-item active"><i class="fa-regular fa-file-lines"></i> All Due Payouts</div>
+      <div class="excel-tab-item" style="color:var(--muted);"><i class="fa-solid fa-calendar-day"></i> Day-wise Tabs Generated on Export</div>
+    </div>
+  </div>
+</section>

@@ -1,5 +1,6 @@
 import json
 import logging
+import re
 from bot_system.ai.cloudflare_ai import call_cloudflare_ai_agent
 from bot_system.db.connection import get_db_connection
 from bot_system.services.old_csv_checker import is_code_in_old_csv
@@ -78,10 +79,10 @@ Your mission is to read user messages in ANY format—no matter how informal, me
 - Otherwise default `card_type` = "NEW".
 
 #### 8. 📅 Custom Date & Time (`custom_created_at`):
-- **ALWAYS REASON & IDENTIFY ANY DATE SPECIFIED IN THE MESSAGE** just like phone numbers, codes, amounts, and card names!
-- Look for date patterns anywhere in the message (e.g., `01/08/26`, `05-08-2024`, `1/8/26`, `5 August`, `date - 01/08/26`, `dt: 12/07/25`).
-- Extract **ONLY THE CLEAN DATE VALUE** (e.g. `"01/08/26"` or `"05-08-2024"` or `"1 August 2026"`). Do NOT include prefixes like `"date - "` or `"dt:"` in the extracted parameter value!
-- If no custom date is specified, leave `custom_created_at` empty (the system will default to the current IST date and time).
+- **USE YOUR INTELLIGENCE TO REASON AND PARSE ANY DATE MENTIONED IN THE MESSAGE** into standard `"YYYY-MM-DD HH:MM:SS"` (or `"YYYY-MM-DD"`) format!
+- Understand all date variants effortlessly (e.g. `1 aug 26` -> `"2026-08-01"`, `1-aug-26` -> `"2026-08-01"`, `1 aug 2026` -> `"2026-08-01"`, `01/08/26` -> `"2026-08-01"`, `15 Sept 2025` -> `"2025-09-15"`, `5 August` -> current year + `"-08-05"`, `yesterday`, `today`, etc.).
+- If a custom date is provided, pass the resolved standard datetime string `"YYYY-MM-DD HH:MM:SS"` in `custom_created_at`.
+- If no date is mentioned, leave `custom_created_at` empty (the system will default to current IST timestamp).
 
 ---
 
@@ -117,7 +118,7 @@ AI_TOOLS = [
                     "currency": {"type": "string", "description": "'Rs.' (INR) or '$' (USD/USDT)"},
                     "payout_term_days": {"type": "integer", "description": "1 for fast payment (1 day), 6 for normal payment (6 days)"},
                     "card_type": {"type": "string", "description": "'OLD' or 'NEW'"},
-                    "custom_created_at": {"type": "string", "description": "Custom date or datetime string if specified by user (e.g. '05/08/24', '05-08-2024', '5 August')"}
+                    "custom_created_at": {"type": "string", "description": "Standardized ISO date or datetime string (e.g. '2026-08-01 14:30:00' or '2026-08-01') resolved by LLM from user text"}
                 },
                 "required": ["gift_card_codes"]
             }
@@ -206,21 +207,27 @@ def execute_add_submission(args: dict, raw_message: str) -> str:
             in_old_db_flag = 0
 
             if clean_codes:
-                format_strings = ','.join(['%s'] * len(clean_codes))
-                cursor.execute(f"SELECT gift_card_code FROM submissions WHERE gift_card_code IN ({format_strings})", tuple(clean_codes))
+                # Fetch all non-rejected submissions' gift_card_code strings to accurately match individual codes
+                cursor.execute("SELECT id, gift_card_code FROM submissions WHERE status != 'rejected'")
                 existing_rows = cursor.fetchall()
-                existing_set = set(row['gift_card_code'] for row in existing_rows)
+                existing_code_to_sub_id = {}
+                for row in existing_rows:
+                    raw_gc = str(row.get("gift_card_code") or "")
+                    sub_c_list = [c.strip() for c in re.split(r'[\n,\s;]+', raw_gc) if c.strip()]
+                    for sc in sub_c_list:
+                        existing_code_to_sub_id[sc] = row.get("id")
 
                 for code_clean in clean_codes:
                     code_in_old = 1 if is_code_in_old_csv(code_clean) else 0
                     if code_in_old:
                         in_old_db_flag = 1
 
-                    if code_clean in existing_set:
+                    if code_clean in existing_code_to_sub_id:
                         repeated_codes.append(code_clean)
+                        matched_sub_id = existing_code_to_sub_id[code_clean]
                         cursor.execute(
-                            "INSERT INTO scammers (phone_number, payment_details, reason, flagged_code, in_old_db) VALUES (%s, %s, %s, %s, %s)",
-                            (phone, upi, "Submitted duplicate card code", code_clean, code_in_old)
+                            "INSERT INTO scammers (phone_number, payment_details, reason, flagged_code, in_old_db, gift_card_name) VALUES (%s, %s, %s, %s, %s, %s)",
+                            (phone, upi, f"Submitted duplicate card code (Matches Submission #{matched_sub_id})", code_clean, code_in_old, card_name)
                         )
                     else:
                         valid_codes.append(code_clean)
@@ -242,16 +249,20 @@ def execute_add_submission(args: dict, raw_message: str) -> str:
 
             if valid_codes:
                 combined_codes_str = ", ".join(valid_codes)
+                initial_code_statuses = json.dumps({
+                    code: {"c_status": "unsold", "platform": platform, "slot": slot}
+                    for code in valid_codes
+                })
                 if parsed_created_at:
                     cursor.execute("""
-                        INSERT INTO submissions (phone_number, gift_card_name, gift_card_code, payment_method, payment_details, total_amount, currency, raw_message, card_type, platform, slot, order_id, status, payout_term_days, in_old_db, created_at)
-                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 'unpaid', %s, %s, %s)
-                    """, (phone, card_name, combined_codes_str, method, upi, amount, currency, raw_message, card_type, platform, slot, order_id, payout_days, in_old_db_flag, parsed_created_at))
+                        INSERT INTO submissions (phone_number, gift_card_name, gift_card_code, payment_method, payment_details, total_amount, currency, raw_message, card_type, platform, slot, order_id, status, code_statuses, payout_term_days, in_old_db, created_at)
+                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 'unpaid', %s, %s, %s, %s)
+                    """, (phone, card_name, combined_codes_str, method, upi, amount, currency, raw_message, card_type, platform, slot, order_id, initial_code_statuses, payout_days, in_old_db_flag, parsed_created_at))
                 else:
                     cursor.execute("""
-                        INSERT INTO submissions (phone_number, gift_card_name, gift_card_code, payment_method, payment_details, total_amount, currency, raw_message, card_type, platform, slot, order_id, status, payout_term_days, in_old_db)
-                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 'unpaid', %s, %s)
-                    """, (phone, card_name, combined_codes_str, method, upi, amount, currency, raw_message, card_type, platform, slot, order_id, payout_days, in_old_db_flag))
+                        INSERT INTO submissions (phone_number, gift_card_name, gift_card_code, payment_method, payment_details, total_amount, currency, raw_message, card_type, platform, slot, order_id, status, code_statuses, payout_term_days, in_old_db)
+                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 'unpaid', %s, %s, %s)
+                    """, (phone, card_name, combined_codes_str, method, upi, amount, currency, raw_message, card_type, platform, slot, order_id, initial_code_statuses, payout_days, in_old_db_flag))
                 saved_ids.append(cursor.lastrowid)
 
             # Check multiple payment requests in same connection session
@@ -354,14 +365,21 @@ def process_user_message_with_agent(user_text: str) -> str:
     ]
 
     # Primary: Call Groq AI SDK with reasoning and function calling
+    logger.info("Calling Groq AI agent...")
     ai_response = call_groq_ai_agent(messages, tools=AI_TOOLS)
     tool_calls = ai_response.get("tool_calls", [])
 
-    # Fallback to Cloudflare Workers AI if Groq returned empty response
-    if not tool_calls and not ai_response.get("content"):
-        logger.info("Groq returned empty response, executing Cloudflare AI fallback...")
+    if tool_calls or ai_response.get("content"):
+        logger.info("Groq AI responded successfully.")
+    else:
+        # Fallback to Cloudflare Workers AI if Groq returned empty response
+        logger.info("Groq AI returned empty response or failed. Executing Cloudflare Workers AI fallback...")
         ai_response = call_cloudflare_ai_agent(messages, tools=AI_TOOLS)
         tool_calls = ai_response.get("tool_calls", [])
+        if tool_calls or ai_response.get("content"):
+            logger.info("Cloudflare Workers AI responded successfully.")
+        else:
+            logger.warning("Cloudflare Workers AI also returned empty response.")
 
     if not tool_calls:
         return ai_response.get("content") or "I couldn't detect valid gift card codes or commands in your message. Please verify the format."

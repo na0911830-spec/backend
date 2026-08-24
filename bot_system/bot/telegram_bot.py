@@ -1,20 +1,15 @@
 import logging
+import asyncio
+from collections import defaultdict
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes
-from bot_system.config import TELEGRAM_BOT_TOKEN
-from bot_system.db.connection import get_db_connection
-from bot_system.bot.code_parser import (
-    extract_and_clean_card,
-    check_anti_code_repeat,
-    check_multiple_payment_requests,
-    check_scammer_blacklist
-)
-
+from bot_system.config import TELEGRAM_BOT_TOKEN, ALLOWED_TELEGRAM_USERNAMES
 from bot_system.bot.agent import process_user_message_with_agent
 
 logger = logging.getLogger(__name__)
 
-from bot_system.config import TELEGRAM_BOT_TOKEN, ALLOWED_TELEGRAM_USERNAMES
+# Sequential message processing lock per user/chat to ensure 1-by-1 processing
+user_message_locks = defaultdict(asyncio.Lock)
 
 def is_user_authorized(update: Update) -> bool:
     """Checks if the incoming Telegram user's username is authorized."""
@@ -23,6 +18,37 @@ def is_user_authorized(update: Update) -> bool:
         return False
     username_clean = user.username.strip().lower()
     return username_clean in [u.lower() for u in ALLOWED_TELEGRAM_USERNAMES]
+
+async def send_split_message(update: Update, text: str):
+    """Sends message in chunks <= 4000 characters to prevent Telegram API BadRequest errors."""
+    if not text:
+        text = "No response generated."
+
+    max_len = 4000
+    if len(text) <= max_len:
+        await update.message.reply_text(text, reply_to_message_id=update.message.message_id)
+        return
+
+    # Split by newlines safely
+    chunks = []
+    lines = text.split("\n")
+    current_chunk = ""
+    for line in lines:
+        if len(current_chunk) + len(line) + 1 > max_len:
+            if current_chunk:
+                chunks.append(current_chunk.strip())
+                current_chunk = ""
+            while len(line) > max_len:
+                chunks.append(line[:max_len])
+                line = line[max_len:]
+            current_chunk = line + "\n"
+        else:
+            current_chunk += line + "\n"
+    if current_chunk.strip():
+        chunks.append(current_chunk.strip())
+
+    for chunk in chunks:
+        await update.message.reply_text(chunk, reply_to_message_id=update.message.message_id)
 
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not is_user_authorized(update):
@@ -48,14 +74,21 @@ async def handle_incoming_message(update: Update, context: ContextTypes.DEFAULT_
     if not text:
         return
 
-    await update.message.reply_chat_action("typing")
+    user_id = update.effective_user.id if update.effective_user else "default"
 
-    try:
-        reply_text = process_user_message_with_agent(text)
-        await update.message.reply_text(reply_text)
-    except Exception as e:
-        logger.error(f"Error processing message with AI Agent: {e}")
-        await update.message.reply_text("Oops! Something went wrong while processing your request. Please try again!")
+    # Acquire lock for this user to ensure sequential message handling 1-by-1 without race conditions
+    async with user_message_locks[user_id]:
+        await update.message.reply_chat_action("typing")
+        try:
+            # Run AI agent processing in a separate thread so asyncio event loop is never blocked
+            reply_text = await asyncio.to_thread(process_user_message_with_agent, text)
+            await send_split_message(update, reply_text)
+        except Exception as e:
+            logger.error(f"Error processing message with AI Agent: {e}", exc_info=True)
+            await update.message.reply_text(
+                "⚠️ Something went wrong while processing this message. Please try sending it again!",
+                reply_to_message_id=update.message.message_id
+            )
 
 def start_telegram_bot_app():
     app = ApplicationBuilder().token(TELEGRAM_BOT_TOKEN).build()
@@ -63,3 +96,4 @@ def start_telegram_bot_app():
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_incoming_message))
     logger.info("Telegram Bot service initialized.")
     return app
+

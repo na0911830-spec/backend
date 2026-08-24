@@ -1,0 +1,92 @@
+<!-- ═══════════════════════
+     1. DASHBOARD
+     ═══════════════════════ -->
+<section id="view-dashboard">
+  <div class="grid-cards">
+    <div class="stat-card">
+      <div class="stat-label">
+        <i class="fa-solid fa-calendar-day"></i> Codes Today
+      </div>
+      <div class="stat-value" id="metric-today-codes">—</div>
+      <div class="stat-sub">Live submissions</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">
+        <i class="fa-solid fa-indian-rupee-sign"></i> Total Payout Due
+      </div>
+      <div class="stat-value" id="metric-total-payout">₹—</div>
+      <div class="stat-sub">Across all suppliers</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">
+        <i class="fa-solid fa-clock"></i> 6-day / 1-day Split
+      </div>
+      <div class="stat-value" id="metric-payout-breakdown" style="font-size:clamp(13px,1.3vw,18px);">₹— / ₹—</div>
+      <div class="stat-sub">Term breakdown</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">
+        <i class="fa-solid fa-users"></i> Suppliers / UPIs
+      </div>
+      <div class="stat-value" id="metric-unique-upis">—</div>
+      <div class="stat-sub">Unique payout destinations</div>
+    </div>
+  </div>
+
+  <div class="ledger-row">
+    <div class="ledger-card">
+      <div class="ledger-dot" style="background:var(--warning);"></div>
+      <div class="ledger-info">
+        <div class="stat-label">Unpaid</div>
+        <div class="stat-value" id="metric-unpaid-cnt">—</div>
+      </div>
+    </div>
+    <div class="ledger-card">
+      <div class="ledger-dot" style="background:var(--accent);"></div>
+      <div class="ledger-info">
+        <div class="stat-label">Listed</div>
+        <div class="stat-value" id="metric-listed-cnt">—</div>
+      </div>
+    </div>
+    <div class="ledger-card">
+      <div class="ledger-dot" style="background:var(--success);"></div>
+      <div class="ledger-info">
+        <div class="stat-label">Sold</div>
+        <div class="stat-value" id="metric-sold-cnt">—</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Today's codes table -->
+  <div class="panel">
+    <div class="panel-head">
+      <div class="panel-title">
+        <svg><use href="#ic-calendar" /></svg>
+        Today's Received Codes
+      </div>
+      <div class="panel-actions">
+        <span class="text-muted" style="font-size:clamp(9px,0.62vw,11px);">Auto-refreshes on visit</span>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Phone</th>
+            <th>Card Name</th>
+            <th>Codes</th>
+            <th>UPI / Crypto</th>
+            <th>Amount</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="today-codes-table-body">
+          <tr>
+            <td colspan="7" style="text-align:center;color:var(--subtle);padding:clamp(12px,1.5vh,20px);">Loading...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

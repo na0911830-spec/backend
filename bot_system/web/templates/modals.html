@@ -1,0 +1,235 @@
+<!-- ══════════════════════════════
+     MODAL: Manual Entry
+     ══════════════════════════════ -->
+<div id="modal-manual-entry" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-head">
+      <span class="modal-title">Manual Code Entry</span>
+      <button class="modal-close" onclick="closeManualModal()">
+        <svg><use href="#ic-close" /></svg> Close
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-field">
+        <div class="form-row">
+          <label class="form-label">Order ID</label>
+          <input type="text" id="manual-order-id" placeholder="e.g. ORD-98124">
+        </div>
+        <div class="form-row">
+          <label class="form-label">Phone Number</label>
+          <input type="text" id="manual-phone" placeholder="e.g. 9014071379">
+        </div>
+        <div class="form-row">
+          <label class="form-label">Gift Card Name</label>
+          <select id="manual-card-name" class="filter-select" style="width:100%;height:30px;"></select>
+        </div>
+        <div class="form-row">
+          <label class="form-label">Gift Card Codes (one per line)</label>
+          <textarea id="manual-codes" placeholder="Enter one code per line"></textarea>
+        </div>
+        <div class="form-row">
+          <label class="form-label">UPI ID or Crypto Address</label>
+          <input type="text" id="manual-upi" placeholder="e.g. supplier@upi or 0xABC...">
+        </div>
+        <div class="form-row">
+          <label class="form-label">Total Amount (INR)</label>
+          <input type="number" id="manual-amount" placeholder="0">
+        </div>
+        <div class="form-row">
+          <label class="form-label">Platform</label>
+          <select id="manual-platform" class="filter-select" style="width:100%;height:30px;"></select>
+        </div>
+        <div class="form-row">
+          <label class="form-label">Slot</label>
+          <select id="manual-slot" class="filter-select" style="width:100%;height:30px;"></select>
+        </div>
+        <button class="btn btn-primary"
+          style="width:100%; justify-content:center; height:clamp(28px,2.8vh,36px); margin-top:clamp(4px,0.4vh,6px);"
+          onclick="submitManualCode()">
+          Save to Database
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     MODAL: Edit Record
+     ══════════════════════════════ -->
+<div id="modal-edit-entry" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-head">
+      <span class="modal-title">Edit Record</span>
+      <button class="modal-close" onclick="closeEditModal()">
+        <svg><use href="#ic-close" /></svg> Close
+      </button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="edit-id">
+      <input type="hidden" id="edit-source">
+      <div class="form-field">
+        <div class="form-row">
+          <label class="form-label">Order ID</label>
+          <input type="text" id="edit-order-id" placeholder="Order ID">
+        </div>
+        <div class="form-row">
+          <label class="form-label">Phone Number</label>
+          <input type="text" id="edit-phone">
+        </div>
+        <div class="form-row">
+          <label class="form-label">Date &amp; Time</label>
+          <input type="text" id="edit-created-at" placeholder="Select Date & Time...">
+        </div>
+        <div class="form-row">
+          <label class="form-label">Gift Card Name</label>
+          <select id="edit-card-name" class="filter-select" style="width:100%;height:30px;"></select>
+        </div>
+        <div class="form-row">
+          <label class="form-label">Gift Card Code(s)</label>
+          <input type="text" id="edit-codes">
+        </div>
+        <div class="form-row">
+          <label class="form-label">UPI ID / Payment Details</label>
+          <input type="text" id="edit-upi">
+        </div>
+        <div class="form-row">
+          <label class="form-label">Total Amount & Currency</label>
+          <div style="display:flex;gap:8px;">
+            <select id="edit-currency" class="filter-select" style="width:110px;height:30px;">
+              <option value="Rs.">Rs. (INR)</option>
+              <option value="$">$ (USD)</option>
+            </select>
+            <input type="number" id="edit-amount" style="flex:1;">
+          </div>
+        </div>
+        <div class="form-row">
+          <label class="form-label">Payout Term</label>
+          <select id="edit-payout-term" class="filter-select" style="width:100%;height:30px;">
+            <option value="1">Fast Payment (1 Day)</option>
+            <option value="6">Normal Payment (6 Days)</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label class="form-label">Card Condition</label>
+          <select id="edit-card-type" class="filter-select" style="width:100%;height:30px;">
+            <option value="NEW">New</option>
+            <option value="OLD">Old</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label class="form-label">Platform</label>
+          <select id="edit-platform" class="filter-select" style="width:100%;height:30px;"></select>
+        </div>
+        <div class="form-row">
+          <label class="form-label">Slot</label>
+          <select id="edit-slot" class="filter-select" style="width:100%;height:30px;"></select>
+        </div>
+        <div class="form-row">
+          <label class="form-label">Status</label>
+          <select id="edit-status" class="filter-select" style="width:100%;height:30px;">
+            <option value="unpaid">Unpaid</option>
+            <option value="listed">Listed</option>
+            <option value="sold">Sold</option>
+            <option value="paid">Paid</option>
+            <option value="rejected">Rejected</option>
+          </select>
+        </div>
+        <button class="btn btn-primary"
+          style="width:100%; justify-content:center; height:clamp(28px,2.8vh,36px); margin-top:clamp(6px,0.5vh,8px);"
+          onclick="saveEditRecord()">
+          Update Record
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     MODAL: Audit Details
+     ══════════════════════════════ -->
+<div id="modal-audit-details" class="modal-overlay">
+  <div class="modal-box wide">
+    <div class="modal-head">
+      <span class="modal-title">Submission Audit</span>
+      <button class="modal-close" onclick="closeAuditModal()">
+        <svg><use href="#ic-close" /></svg> Close
+      </button>
+    </div>
+    <div class="modal-body">
+      <div id="audit-details-content">
+        <div style="text-align:center;color:var(--subtle);padding:clamp(16px,2vh,24px);">Loading...</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     MODAL: Bulk Update Status
+     ══════════════════════════════ -->
+<div id="modal-bulk-status" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-head">
+      <span class="modal-title"><i class="fa-solid fa-list-check"></i> Bulk Update Selected Items</span>
+      <button class="modal-close" onclick="closeBulkStatusModal()">
+        <svg><use href="#ic-close" /></svg> Close
+      </button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">
+        Updating <strong id="bulk-modal-count" style="color:var(--ink);">0</strong> selected items across the filtered results:
+      </p>
+      
+      <div class="form-field">
+        <!-- Shown ONLY in Inventory View (Submissions) -->
+        <div id="bulk-status-row-inventory" class="form-row">
+          <label class="form-label">Submission Status (Unpaid, Paid, etc.)</label>
+          <select id="bulk-target-status" class="filter-select" style="width:100%;height:32px;">
+            <option value="">-- Leave Unchanged --</option>
+            <option value="unpaid">Unpaid</option>
+            <option value="listed">Listed</option>
+            <option value="sold">Sold</option>
+            <option value="paid">Paid</option>
+            <option value="rejected">Rejected</option>
+          </select>
+        </div>
+
+        <!-- Shown ONLY in S-View (Platform, Slot, C-Status) -->
+        <div id="bulk-sview-meta-rows">
+          <div class="form-row">
+            <label class="form-label">Platform</label>
+            <select id="bulk-target-platform" class="filter-select" style="width:100%;height:32px;">
+              <option value="">-- Leave Unchanged --</option>
+            </select>
+          </div>
+
+          <div class="form-row" style="margin-top:10px;">
+            <label class="form-label">Slot</label>
+            <select id="bulk-target-slot" class="filter-select" style="width:100%;height:32px;">
+              <option value="">-- Leave Unchanged --</option>
+            </select>
+          </div>
+
+          <div class="form-row" style="margin-top:10px;">
+            <label class="form-label">Code C-Status (Unsold, Listed, etc.)</label>
+            <select id="bulk-target-cstatus" class="filter-select" style="width:100%;height:32px;">
+              <option value="">-- Leave Unchanged --</option>
+              <option value="unsold">Unsold</option>
+              <option value="listed">Listed</option>
+              <option value="sold">Sold</option>
+              <option value="rejected">Rejected</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:8px;margin-top:16px;">
+          <button class="btn btn-ghost" style="flex:1;justify-content:center;height:32px;" onclick="closeBulkStatusModal()">
+            Cancel
+          </button>
+          <button class="btn btn-primary" style="flex:1;justify-content:center;height:32px;" onclick="applyBulkStatusUpdate()">
+            <i class="fa-solid fa-check"></i> Apply to Selected
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

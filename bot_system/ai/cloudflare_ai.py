@@ -7,6 +7,7 @@ logger = logging.getLogger(__name__)
 
 def call_cloudflare_ai_agent(messages: list, tools: list = None) -> dict:
     """Calls Cloudflare Workers AI with chat messages and function tools."""
+    logger.info(f"Calling Cloudflare Workers AI REST API (Model: {CF_MODEL})...")
     url = f"https://api.cloudflare.com/client/v4/accounts/{CF_ACCOUNT_ID}/ai/run/{CF_MODEL}"
     headers = {
         "Authorization": f"Bearer {CF_API_TOKEN}",
@@ -25,6 +26,7 @@ def call_cloudflare_ai_agent(messages: list, tools: list = None) -> dict:
         response.raise_for_status()
         data = response.json()
         if data.get("success"):
+            logger.info("Cloudflare Workers AI REST API request succeeded.")
             result = data.get("result", {})
             if "choices" in result and len(result["choices"]) > 0:
                 msg = result["choices"][0]["message"]

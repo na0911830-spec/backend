@@ -1,0 +1,83 @@
+<!-- ═══════════════════════
+     2.5. S-VIEW
+     ═══════════════════════ -->
+<section id="view-sview" style="display:none;">
+  <div class="filter-bar">
+    <input type="text" id="sview-search" class="filter-input"
+      placeholder="Search Order ID / Code / Card Name..." oninput="applySViewFilters()">
+    <input type="date" id="sview-date" class="filter-input" style="height:30px;padding:0 6px;"
+      onchange="applySViewFilters()" title="Filter by Date">
+    <select id="sview-card-name" class="filter-select" onchange="applySViewFilters()">
+      <option value="">All Cards (PSN, LOL, Amazon, etc.)</option>
+    </select>
+    <select id="sview-platform" class="filter-select" onchange="applySViewFilters()">
+      <option value="">All Platforms</option>
+    </select>
+    <select id="sview-slot" class="filter-select" onchange="applySViewFilters()">
+      <option value="">All Slots</option>
+    </select>
+    <select id="sview-status" class="filter-select" onchange="applySViewFilters()">
+      <option value="">All C-Statuses</option>
+      <option value="unsold">Unsold</option>
+      <option value="listed">Listed</option>
+      <option value="sold">Sold</option>
+      <option value="rejected">Rejected</option>
+    </select>
+    <button class="btn btn-ghost" onclick="clearSViewFilters()">Reset</button>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head">
+      <div class="panel-title">
+        <i class="fa-solid fa-eye"></i>
+        Simplified View (S-View)
+        <span id="sview-filtered-stats" style="font-size:11px;font-weight:normal;color:var(--muted);margin-left:8px;">
+          (<span id="sview-entries-count">0</span> entries | <span id="sview-codes-count">0</span> codes)
+        </span>
+      </div>
+      <div class="panel-actions">
+        <button class="btn btn-default" style="height:clamp(20px,2vh,26px);font-size:clamp(9px,0.62vw,11px);"
+          title="Copy all gift card codes from filtered results as comma separated list"
+          onclick="copyFilteredCodes('sview', this)">
+          <i class="fa-regular fa-copy"></i> Copy Filtered Codes
+        </button>
+        <button id="sview-bulk-status-btn" class="btn btn-default" style="height:clamp(20px,2vh,26px);font-size:clamp(9px,0.62vw,11px);display:none;"
+          onclick="openBulkStatusModal('sview')">
+          <i class="fa-solid fa-list-check"></i> Bulk Update (<span id="sview-selected-count">0</span>)
+        </button>
+        <button class="btn btn-primary btn-bulk-save-trigger" style="display:none;" onclick="bulkSavePendingChanges()">
+          <i class="fa-solid fa-floppy-disk"></i> Save Changes
+        </button>
+        <button class="btn btn-default" style="height:clamp(20px,2vh,26px);font-size:clamp(9px,0.62vw,11px);"
+          onclick="fetchInventory()">
+          <i class="fa-solid fa-rotate-right"></i> Refresh
+        </button>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="width:32px;text-align:center;">
+              <input type="checkbox" id="sview-select-all" onclick="toggleSelectAll('sview', this.checked)" title="Select all filtered items">
+            </th>
+            <th>Tag</th>
+            <th>Date &amp; Time</th>
+            <th>Order ID</th>
+            <th>Platform</th>
+            <th>Slot</th>
+            <th>C-Status</th>
+            <th>Card Name</th>
+            <th>Codes</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="sview-table-body">
+          <tr>
+            <td colspan="9" style="text-align:center;color:var(--subtle);padding:clamp(12px,1.5vh,20px);">Loading...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,35 @@
+<!-- ═══════════════════════
+     5. SCAMMER SHIELD
+     ═══════════════════════ -->
+<section id="view-scammers" style="display:none;">
+  <div class="panel">
+    <div class="panel-head">
+      <div class="panel-title"><svg><use href="#ic-shield" /></svg> Blacklisted Records</div>
+      <div class="panel-actions">
+        <button class="btn btn-default" style="height:clamp(20px,2vh,26px);font-size:clamp(9px,0.62vw,11px);"
+          onclick="fetchScammers()">
+          <svg><use href="#ic-refresh" /></svg> Refresh
+        </button>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Flagged Date</th>
+            <th>Phone Number</th>
+            <th>Payment UPI</th>
+            <th>Flagged Code</th>
+            <th>Reason</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="scammers-table-body">
+          <tr>
+            <td colspan="6" style="text-align:center;color:var(--subtle);padding:clamp(12px,1.5vh,20px);">No records.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

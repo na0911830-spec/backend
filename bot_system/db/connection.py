@@ -42,6 +42,7 @@ def init_db():
                     slot VARCHAR(50) DEFAULT 'test1',
                     order_id VARCHAR(100) DEFAULT '',
                     status ENUM('unpaid', 'paid', 'listed', 'sold', 'rejected') DEFAULT 'unpaid',
+                    code_statuses JSON,
                     payout_term_days INT DEFAULT 6,
                     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
                     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -54,6 +55,9 @@ def init_db():
 
             cursor.execute("""
                 ALTER TABLE submissions ADD COLUMN IF NOT EXISTS currency VARCHAR(10) DEFAULT 'Rs.';
+            """)
+            cursor.execute("""
+                ALTER TABLE submissions ADD COLUMN IF NOT EXISTS code_statuses JSON;
             """)
 
             # 2. Scammers & Duplicate Blacklist Table

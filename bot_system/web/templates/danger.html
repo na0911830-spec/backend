@@ -1,0 +1,23 @@
+<!-- ═══════════════════════
+     7. DANGER ZONE
+     ═══════════════════════ -->
+<section id="view-danger" style="display:none;">
+  <div class="danger-panel">
+    <div class="danger-panel-head">
+      <svg><use href="#ic-trash" /></svg>
+      <span class="danger-panel-title">Security Authorization Required</span>
+    </div>
+    <div class="danger-panel-body">
+      <p>
+        Permanently drops all records in
+        <span class="mono">submissions</span> and <span class="mono">scammers</span> tables.
+        This action cannot be undone.
+      </p>
+      <input type="password" id="danger-passkey" placeholder="Admin passkey (default: admin123)">
+      <button class="btn btn-danger" style="width:100%; justify-content:center; height:clamp(28px,2.8vh,36px);"
+        onclick="resetAllData()">
+        <svg><use href="#ic-trash" /></svg> Authorize Data Wipe
+      </button>
+    </div>
+  </div>
+</section>
