@@ -17,7 +17,11 @@ if env_path.exists():
 
 # Telegram Bot Token & Access Control
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "8689128856:AAEXXeVEFCd_KsrHvmkCvzL0-A8uYGFEdcA")
-ALLOWED_TELEGRAM_USERNAMES = ["shashwat7128", "gcx_onexx"]
+allowed_users_env = os.environ.get("ALLOWED_TELEGRAM_USERNAMES", "")
+if allowed_users_env:
+    ALLOWED_TELEGRAM_USERNAMES = [u.strip().lstrip("@") for u in allowed_users_env.split(",") if u.strip()]
+else:
+    ALLOWED_TELEGRAM_USERNAMES = ["shashwat7128", "gcx_onexx", "Vilen_official1"]
 
 # Groq AI Credentials & Model (supports gkey1, gkey2, gkey3..., or GROQ_API_KEYS)
 groq_list = []

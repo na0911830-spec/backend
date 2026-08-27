@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Usage & Billing · GCX IMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    body { background:var(--canvas); color:var(--ink); font-family:'Inter',-apple-system,sans-serif; margin:0; padding:0; min-height:100vh; }
+    .wrapper { max-width:1180px; margin:0 auto; padding:28px 24px 72px; }
+
+    /* ── Header ── */
+    .page-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; padding-bottom:18px; border-bottom:1px solid var(--border); }
+    .header-left { display:flex; align-items:center; gap:14px; }
+    .hbadge { width:44px; height:44px; border-radius:12px; background:var(--accent-gradient,#2563eb); color:#fff; display:flex; align-items:center; justify-content:center; font-size:20px; box-shadow:var(--shadow-sm); }
+    .page-title { font-size:21px; font-weight:700; margin:0; letter-spacing:-.3px; }
+    .page-sub { font-size:12.5px; color:var(--muted); margin:2px 0 0; }
+    .header-right { display:flex; gap:8px; align-items:center; }
+
+    /* ── Billing Period Bar ── */
+    .billing-bar { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:14px 20px; margin-bottom:22px; display:flex; align-items:center; gap:16px; flex-wrap:wrap; box-shadow:var(--shadow-sm); }
+    .billing-bar label { font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; white-space:nowrap; }
+    .billing-bar input[type="date"] { background:var(--surface-raised); border:1px solid var(--border-strong); color:var(--ink); border-radius:8px; padding:7px 12px; font-size:13px; font-family:'Inter',sans-serif; outline:none; cursor:pointer; }
+    .billing-bar input[type="date"]:focus { border-color:var(--accent); }
+    .billing-bar .sep { color:var(--subtle); font-size:12px; }
+    .period-summary { margin-left:auto; font-size:12.5px; color:var(--muted); background:var(--surface-raised); padding:6px 14px; border-radius:20px; border:1px solid var(--border); white-space:nowrap; }
+    .period-summary strong { color:var(--ink); }
+
+    /* ── KPI Grid ── */
+    .kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:14px; margin-bottom:22px; }
+    .kpi-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px 20px; box-shadow:var(--shadow-sm); display:flex; flex-direction:column; gap:5px; transition:transform .14s,box-shadow .14s; }
+    .kpi-card:hover { transform:translateY(-2px); box-shadow:var(--shadow-md); }
+    .kpi-label { font-size:11.5px; font-weight:600; text-transform:uppercase; letter-spacing:.6px; color:var(--muted); display:flex; align-items:center; gap:6px; }
+    .kpi-value { font-size:28px; font-weight:700; font-family:'JetBrains Mono',monospace; line-height:1.15; color:var(--ink); }
+    .kpi-sub { font-size:11.5px; color:var(--muted); }
+
+    /* ── Billing highlight cards ── */
+    .billing-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin-bottom:22px; }
+    .bill-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px 20px; box-shadow:var(--shadow-sm); display:flex; flex-direction:column; gap:5px; position:relative; overflow:hidden; }
+    .bill-card::before { content:''; position:absolute; top:0; left:0; width:4px; height:100%; border-radius:2px 0 0 2px; }
+    .bill-card.accent::before { background:var(--accent); }
+    .bill-card.green::before { background:var(--success); }
+    .bill-card.amber::before { background:var(--warning); }
+    .bill-card.red::before { background:var(--danger); }
+    .bill-label { font-size:11.5px; font-weight:600; text-transform:uppercase; letter-spacing:.6px; color:var(--muted); }
+    .bill-value { font-size:26px; font-weight:700; font-family:'JetBrains Mono',monospace; }
+    .bill-sub { font-size:11.5px; color:var(--muted); }
+
+    /* ── Charts ── */
+    .charts-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:22px; }
+    @media(max-width:700px) { .charts-grid { grid-template-columns:1fr; } }
+    .chart-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; box-shadow:var(--shadow-sm); overflow:hidden; }
+    .chart-header { padding:14px 20px 10px; border-bottom:1px solid var(--border); background:var(--surface-raised); display:flex; justify-content:space-between; align-items:center; }
+    .chart-title { font-size:14px; font-weight:600; display:flex; align-items:center; gap:7px; }
+    .chart-body { padding:16px 16px 14px; }
+    canvas { max-height:220px; }
+
+    /* ── Table ── */
+    .card-panel { background:var(--surface); border:1px solid var(--border); border-radius:14px; box-shadow:var(--shadow-sm); overflow:hidden; }
+    .card-panel-header { padding:14px 20px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; background:var(--surface-raised); }
+    .cpanel-title { font-size:14px; font-weight:600; display:flex; align-items:center; gap:7px; }
+    table.ut { width:100%; border-collapse:collapse; font-size:13px; text-align:left; }
+    table.ut th { padding:11px 18px; font-size:11px; text-transform:uppercase; letter-spacing:.6px; color:var(--muted); background:var(--surface); border-bottom:1px solid var(--border); font-weight:600; }
+    table.ut td { padding:13px 18px; border-bottom:1px solid var(--border); }
+    table.ut tr:last-child td { border-bottom:none; }
+    table.ut tr:hover td { background:var(--surface-hover); }
+    .date-cell { display:inline-flex; align-items:center; gap:6px; font-family:'JetBrains Mono',monospace; font-weight:600; font-size:12.5px; }
+    .tag-today { background:var(--accent-bg); color:var(--accent); padding:2px 7px; border-radius:5px; font-size:10.5px; font-weight:600; text-transform:uppercase; }
+    .tag-yesterday { background:var(--surface-hover); color:var(--muted); padding:2px 7px; border-radius:5px; font-size:10.5px; }
+    .tag-period { background:rgba(16,185,129,.12); color:#059669; padding:2px 7px; border-radius:5px; font-size:10.5px; font-weight:600; }
+    .badge-groq { display:inline-flex; align-items:center; gap:4px; padding:3px 9px; border-radius:6px; background:rgba(245,158,11,.1); color:#d97706; font-family:'JetBrains Mono',monospace; font-size:12.5px; font-weight:600; }
+    .badge-cf { display:inline-flex; align-items:center; gap:4px; padding:3px 9px; border-radius:6px; background:rgba(249,115,22,.1); color:#ea580c; font-family:'JetBrains Mono',monospace; font-size:12.5px; font-weight:600; }
+    .badge-total { display:inline-flex; align-items:center; gap:4px; padding:3px 11px; border-radius:6px; background:var(--accent-bg); color:var(--accent); font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; }
+    .badge-cost { display:inline-flex; align-items:center; gap:4px; padding:3px 9px; border-radius:6px; background:rgba(16,185,129,.1); color:#059669; font-family:'JetBrains Mono',monospace; font-size:12.5px; font-weight:600; }
+    .empty-state { padding:44px 24px; text-align:center; color:var(--muted); }
+    .empty-state i { font-size:32px; opacity:.4; display:block; margin-bottom:10px; }
+
+    /* ── Section divider ── */
+    .section-label { font-size:11px; font-weight:700; letter-spacing:.8px; text-transform:uppercase; color:var(--muted); margin:22px 0 10px; display:flex; align-items:center; gap:8px; }
+    .section-label::after { content:''; flex:1; height:1px; background:var(--border); }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- ── Header ── -->
+  <header class="page-header">
+    <div class="header-left">
+      <div class="hbadge"><i class="fa-solid fa-chart-line"></i></div>
+      <div>
+        <h1 class="page-title">AI Usage &amp; Billing</h1>
+        <p class="page-sub">Day-wise requests, cost estimates &amp; billing period analytics</p>
+      </div>
+    </div>
+    <div class="header-right">
+      <button class="btn btn-default" onclick="fetchUsageData()">
+        <i class="fa-solid fa-rotate-right" id="refresh-icon"></i> Refresh
+      </button>
+      <button class="btn btn-default" onclick="toggleTheme()" title="Toggle theme">
+        <i id="theme-icon" class="fa-solid fa-moon"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- ── Billing Period Selector ── -->
+  <div class="billing-bar">
+    <i class="fa-solid fa-calendar-range" style="color:var(--accent)"></i>
+    <label>Billing Period Starts</label>
+    <input type="date" id="billing-start-date" onchange="onBillingDateChange()">
+    <span class="sep">→</span>
+    <span style="font-size:13px; color:var(--muted);">Today</span>
+    <span style="font-size:11.5px; color:var(--subtle); margin-left:4px;">(billing resets on this date each month)</span>
+    <div class="period-summary" id="period-summary">Select a billing start date</div>
+  </div>
+
+  <!-- ── Overall KPIs ── -->
+  <div class="section-label"><i class="fa-solid fa-bolt"></i> Live Stats</div>
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-label"><i class="fa-solid fa-sun"></i> Today</div>
+      <div class="kpi-value" id="kpi-today">0</div>
+      <div class="kpi-sub" id="kpi-today-sub">Groq 0 · CF 0</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label"><i class="fa-solid fa-moon"></i> Yesterday</div>
+      <div class="kpi-value" id="kpi-yesterday">0</div>
+      <div class="kpi-sub" id="kpi-yesterday-sub">Groq 0 · CF 0</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label"><i class="fa-solid fa-microchip" style="color:#d97706"></i> All-Time Groq</div>
+      <div class="kpi-value" id="kpi-groq" style="color:#d97706">0</div>
+      <div class="kpi-sub">Successful completions</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label"><i class="fa-solid fa-cloud" style="color:#ea580c"></i> All-Time CF</div>
+      <div class="kpi-value" id="kpi-cf" style="color:#ea580c">0</div>
+      <div class="kpi-sub">Successful completions</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label"><i class="fa-solid fa-layer-group" style="color:var(--accent)"></i> All-Time Total</div>
+      <div class="kpi-value" id="kpi-total" style="color:var(--accent)">0</div>
+      <div class="kpi-sub">All successful AI calls</div>
+    </div>
+  </div>
+
+  <!-- ── Billing Cards ── -->
+  <div class="section-label"><i class="fa-solid fa-receipt"></i> Billing Estimate (at $0.0075 / request)</div>
+  <div class="billing-grid">
+    <div class="bill-card accent">
+      <div class="bill-label">Period Requests</div>
+      <div class="bill-value" id="bill-period-reqs">—</div>
+      <div class="bill-sub" id="bill-period-label">Set billing start date above</div>
+    </div>
+    <div class="bill-card green">
+      <div class="bill-label">Period Cost (USD)</div>
+      <div class="bill-value" id="bill-period-usd">—</div>
+      <div class="bill-sub" id="bill-period-inr">— INR</div>
+    </div>
+    <div class="bill-card amber">
+      <div class="bill-label">All-Time Cost (USD)</div>
+      <div class="bill-value" id="bill-alltime-usd">$0.00</div>
+      <div class="bill-sub" id="bill-alltime-inr">₹0.00</div>
+    </div>
+    <div class="bill-card red">
+      <div class="bill-label">Per Request</div>
+      <div class="bill-value">$0.0075</div>
+      <div class="bill-sub">~₹0.63 · ~2,000 tokens/req</div>
+    </div>
+  </div>
+
+  <!-- ── Charts ── -->
+  <div class="section-label"><i class="fa-solid fa-chart-area"></i> Analytics Charts</div>
+  <div class="charts-grid">
+    <div class="chart-card">
+      <div class="chart-header">
+        <div class="chart-title"><i class="fa-solid fa-arrow-trend-up" style="color:var(--accent)"></i> Daily Requests</div>
+        <span style="font-size:11.5px; color:var(--muted)" id="chart-req-period"></span>
+      </div>
+      <div class="chart-body"><canvas id="chartRequests"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-header">
+        <div class="chart-title"><i class="fa-solid fa-dollar-sign" style="color:#059669"></i> Daily Cost (USD)</div>
+        <span style="font-size:11.5px; color:var(--muted)" id="chart-cost-period"></span>
+      </div>
+      <div class="chart-body"><canvas id="chartCost"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ── Day-wise Table ── -->
+  <div class="section-label"><i class="fa-solid fa-table"></i> Day-wise Breakdown</div>
+  <div class="card-panel">
+    <div class="card-panel-header">
+      <div class="cpanel-title"><i class="fa-solid fa-calendar-days"></i> All Records</div>
+      <div style="font-size:11.5px; color:var(--muted)" id="table-updated">Live sync</div>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="ut">
+        <thead>
+          <tr>
+            <th style="width:22%">Date</th>
+            <th style="width:18%">Groq</th>
+            <th style="width:18%">Cloudflare</th>
+            <th style="width:16%; text-align:center">Total</th>
+            <th style="width:14%; text-align:center">Cost (USD)</th>
+            <th style="width:12%; text-align:right">Cost (INR)</th>
+          </tr>
+        </thead>
+        <tbody id="usage-tbody">
+          <tr><td colspan="6" class="empty-state"><i class="fa-solid fa-spinner fa-spin"></i>Loading...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div><!-- /wrapper -->
+
+<script>
+  // ─── Constants ───────────────────────────────
+  const COST_PER_REQUEST = 0.0075;   // USD
+  const USD_TO_INR       = 84;       // approximate
+
+  let allRecords = [];
+  let chartReq  = null;
+  let chartCost = null;
+
+  // ─── Theme ───────────────────────────────────
+  function initTheme() {
+    const t = localStorage.getItem('gcx_theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', t);
+    document.getElementById('theme-icon').className = t === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+  }
+  function toggleTheme() {
+    const cur = document.documentElement.getAttribute('data-theme') || 'dark';
+    const nxt = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', nxt);
+    localStorage.setItem('gcx_theme', nxt);
+    document.getElementById('theme-icon').className = nxt === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+    if (allRecords.length) renderAll(allRecords);
+  }
+
+  // ─── Date helpers ─────────────────────────────
+  function todayStr() { return fmtDate(new Date()); }
+  function yesterdayStr() { const d = new Date(); d.setDate(d.getDate()-1); return fmtDate(d); }
+  function fmtDate(d) {
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  }
+
+  // ─── Billing period ───────────────────────────
+  function getBillingStartDate() {
+    const val = document.getElementById('billing-start-date').value;
+    if (!val) return null;
+    // Find the most recent occurrence of that day-of-month
+    const dayOfMonth = new Date(val).getUTCDate();
+    const now = new Date();
+    let start = new Date(now.getFullYear(), now.getMonth(), dayOfMonth);
+    if (start > now) start.setMonth(start.getMonth() - 1);
+    return fmtDate(start);
+  }
+
+  function onBillingDateChange() {
+    const raw = document.getElementById('billing-start-date').value;
+    if (raw) localStorage.setItem('gcx_billing_start', raw);
+    if (allRecords.length) renderAll(allRecords);
+  }
+
+  function initBillingDate() {
+    const saved = localStorage.getItem('gcx_billing_start');
+    if (saved) {
+      document.getElementById('billing-start-date').value = saved;
+    } else {
+      // Default: 26th of the current month
+      const now = new Date();
+      const y = now.getFullYear();
+      const m = String(now.getMonth() + 1).padStart(2, '0');
+      const defaultDate = `${y}-${m}-26`;
+      document.getElementById('billing-start-date').value = defaultDate;
+      localStorage.setItem('gcx_billing_start', defaultDate);
+    }
+  }
+
+  // ─── Fetch ────────────────────────────────────
+  async function fetchUsageData() {
+    const icon = document.getElementById('refresh-icon');
+    icon.classList.add('fa-spin');
+    try {
+      const res  = await fetch('/api/usage');
+      const data = await res.json();
+      if (data.success && Array.isArray(data.data)) {
+        allRecords = data.data;
+        renderAll(allRecords);
+      } else {
+        renderEmptyState('Failed to load data.');
+      }
+    } catch(e) {
+      renderEmptyState('Unable to connect to server.');
+    } finally {
+      setTimeout(() => icon.classList.remove('fa-spin'), 400);
+    }
+  }
+
+  // ─── Main renderer ────────────────────────────
+  function renderAll(records) {
+    const today     = todayStr();
+    const yesterday = yesterdayStr();
+    const billingStart = getBillingStartDate();
+
+    let todayG=0, todayCF=0, todayT=0;
+    let yestG=0, yestCF=0, yestT=0;
+    let allG=0, allCF=0, allT=0;
+    let periodT=0;
+
+    // Sorted DESC already (newest first)
+    // For charts we want ascending — reverse copy
+    const ascending = [...records].reverse();
+
+    const chartLabels=[], chartReqData=[], chartCostData=[];
+
+    let tableHtml = '';
+    records.forEach(row => {
+      const d     = row.date_str || '';
+      const groq  = parseInt(row.groq_count  || 0, 10);
+      const cf    = parseInt(row.cloudflare_count || 0, 10);
+      const total = parseInt(row.total_count || (groq+cf), 10);
+      const cost  = total * COST_PER_REQUEST;
+      const inr   = cost * USD_TO_INR;
+
+      allG  += groq; allCF += cf; allT += total;
+
+      if (d === today)     { todayG=groq; todayCF=cf; todayT=total; }
+      if (d === yesterday) { yestG=groq;  yestCF=cf;  yestT=total;  }
+      if (billingStart && d >= billingStart) periodT += total;
+
+      let badge = '';
+      if (d === today)     badge = '<span class="tag-today">Today</span>';
+      else if (d === yesterday) badge = '<span class="tag-yesterday">Yesterday</span>';
+      else if (billingStart && d >= billingStart) badge = '<span class="tag-period">This Period</span>';
+
+      tableHtml += `
+        <tr>
+          <td><div class="date-cell"><i class="fa-regular fa-calendar" style="color:var(--muted)"></i>${d}${badge}</div></td>
+          <td><span class="badge-groq"><i class="fa-solid fa-microchip"></i>${groq.toLocaleString()}</span></td>
+          <td><span class="badge-cf"><i class="fa-solid fa-cloud"></i>${cf.toLocaleString()}</span></td>
+          <td style="text-align:center"><span class="badge-total">${total.toLocaleString()}</span></td>
+          <td style="text-align:center"><span class="badge-cost">$${cost.toFixed(4)}</span></td>
+          <td style="text-align:right; font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--muted);">₹${inr.toFixed(2)}</td>
+        </tr>`;
+    });
+
+    // Chart data (ascending)
+    ascending.forEach(row => {
+      chartLabels.push(row.date_str || '');
+      const t = parseInt(row.total_count || 0, 10);
+      chartReqData.push(t);
+      chartCostData.push(parseFloat((t * COST_PER_REQUEST).toFixed(4)));
+    });
+
+    // ── Update DOM ─────────────────────────
+    document.getElementById('usage-tbody').innerHTML = tableHtml || '<tr><td colspan="6" class="empty-state"><i class="fa-solid fa-chart-simple"></i><div>No records yet.</div></td></tr>';
+    document.getElementById('table-updated').innerText = `Updated ${new Date().toLocaleTimeString()}`;
+
+    // KPIs
+    document.getElementById('kpi-today').innerText     = todayT.toLocaleString();
+    document.getElementById('kpi-today-sub').innerText = `Groq ${todayG} · CF ${todayCF}`;
+    document.getElementById('kpi-yesterday').innerText     = yestT.toLocaleString();
+    document.getElementById('kpi-yesterday-sub').innerText = `Groq ${yestG} · CF ${yestCF}`;
+    document.getElementById('kpi-groq').innerText  = allG.toLocaleString();
+    document.getElementById('kpi-cf').innerText    = allCF.toLocaleString();
+    document.getElementById('kpi-total').innerText = allT.toLocaleString();
+
+    // Billing cards
+    const allCostUSD = allT * COST_PER_REQUEST;
+    const allCostINR = allCostUSD * USD_TO_INR;
+    document.getElementById('bill-alltime-usd').innerText = `$${allCostUSD.toFixed(2)}`;
+    document.getElementById('bill-alltime-inr').innerText = `₹${allCostINR.toFixed(2)}`;
+
+    if (billingStart) {
+      const periodCostUSD = periodT * COST_PER_REQUEST;
+      const periodCostINR = periodCostUSD * USD_TO_INR;
+      document.getElementById('bill-period-reqs').innerText = periodT.toLocaleString();
+      document.getElementById('bill-period-usd').innerText  = `$${periodCostUSD.toFixed(2)}`;
+      document.getElementById('bill-period-inr').innerText  = `₹${periodCostINR.toFixed(2)}`;
+      document.getElementById('bill-period-label').innerText = `Since ${billingStart}`;
+      document.getElementById('period-summary').innerHTML = `Period: <strong>${billingStart}</strong> → Today&nbsp;·&nbsp;<strong>${periodT.toLocaleString()} reqs</strong>`;
+    } else {
+      document.getElementById('bill-period-reqs').innerText = '—';
+      document.getElementById('bill-period-usd').innerText  = '—';
+      document.getElementById('bill-period-inr').innerText  = '—';
+      document.getElementById('bill-period-label').innerText = 'Set billing start date above';
+      document.getElementById('period-summary').innerText = 'Select a billing start date';
+    }
+
+    // ── Charts ─────────────────────────────
+    drawCharts(chartLabels, chartReqData, chartCostData, billingStart);
+  }
+
+  // ─── Charts ───────────────────────────────────
+  function getChartColors() {
+    const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    return {
+      grid:   dark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)',
+      tick:   dark ? '#8094ae' : '#64748b',
+      accent: '#3b82f6',
+      green:  '#10b981',
+    };
+  }
+
+  function makeBaseOptions(c) {
+    return {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false } },
+      scales: {
+        x: { grid:{ color:c.grid }, ticks:{ color:c.tick, font:{size:11}, maxTicksLimit:8, maxRotation:0 } },
+        y: { grid:{ color:c.grid }, ticks:{ color:c.tick, font:{size:11} }, beginAtZero: true }
+      }
+    };
+  }
+
+  function drawCharts(labels, reqData, costData, billingStart) {
+    const c = getChartColors();
+
+    // Find index of billing start for vertical annotation
+    let billingIdx = billingStart ? labels.findIndex(l => l >= billingStart) : -1;
+
+    // Gradient helper
+    function grad(ctx, color1, color2) {
+      const g = ctx.createLinearGradient(0,0,0,220);
+      g.addColorStop(0, color1); g.addColorStop(1, color2); return g;
+    }
+
+    // ── Requests Chart ──
+    if (chartReq) { chartReq.destroy(); }
+    const rCtx = document.getElementById('chartRequests').getContext('2d');
+    const rGrad = grad(rCtx, 'rgba(59,130,246,0.45)', 'rgba(59,130,246,0.03)');
+    chartReq = new Chart(rCtx, {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [{
+          label: 'Requests',
+          data: reqData,
+          fill: true,
+          backgroundColor: rGrad,
+          borderColor: '#3b82f6',
+          borderWidth: 2,
+          pointRadius: 3,
+          pointBackgroundColor: '#3b82f6',
+          tension: 0.4
+        }]
+      },
+      options: {
+        ...makeBaseOptions(c),
+        plugins: {
+          ...makeBaseOptions(c).plugins,
+          tooltip: { callbacks: { label: ctx => ` ${ctx.parsed.y.toLocaleString()} requests` } }
+        }
+      }
+    });
+    document.getElementById('chart-req-period').innerText = billingStart ? `From ${billingStart}` : `All time`;
+
+    // ── Cost Chart ──
+    if (chartCost) { chartCost.destroy(); }
+    const cCtx = document.getElementById('chartCost').getContext('2d');
+    const cGrad = grad(cCtx, 'rgba(16,185,129,0.45)', 'rgba(16,185,129,0.03)');
+    chartCost = new Chart(cCtx, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [{
+          label: 'Cost USD',
+          data: costData,
+          backgroundColor: costData.map((_, i) => {
+            if (billingStart && labels[i] >= billingStart) return 'rgba(16,185,129,0.75)';
+            return 'rgba(16,185,129,0.3)';
+          }),
+          borderColor: '#10b981',
+          borderWidth: 1,
+          borderRadius: 4,
+        }]
+      },
+      options: {
+        ...makeBaseOptions(c),
+        plugins: {
+          ...makeBaseOptions(c).plugins,
+          tooltip: { callbacks: { label: ctx => ` $${ctx.parsed.y.toFixed(4)}` } }
+        }
+      }
+    });
+    document.getElementById('chart-cost-period').innerText = billingStart ? `Highlighted = current period` : `All time`;
+  }
+
+  function renderEmptyState(msg) {
+    document.getElementById('usage-tbody').innerHTML = `<tr><td colspan="6" class="empty-state"><i class="fa-solid fa-chart-simple"></i><div>${msg}</div></td></tr>`;
+  }
+
+  // ─── Init ─────────────────────────────────────
+  initTheme();
+  initBillingDate();
+  fetchUsageData();
+  setInterval(fetchUsageData, 30000);
+</script>
+</body>
+</html>

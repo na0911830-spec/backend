@@ -99,6 +99,20 @@ def init_db():
                 ('platforms', '["test1", "test2", "test3"]'),
                 ('slots', '["test1", "test2", "test3"]');
             """)
+
+            # 4. AI Usage Tracking Table (Day-wise successful request counts)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS ai_usage (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    request_date DATE NOT NULL UNIQUE,
+                    groq_count INT DEFAULT 0,
+                    cloudflare_count INT DEFAULT 0,
+                    total_count INT DEFAULT 0,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                    INDEX idx_req_date (request_date)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+            """)
             logger.info("Database schema verified/initialized successfully.")
     except Exception as e:
         logger.error(f"Error initializing DB: {e}")
@@ -111,3 +125,59 @@ def init_db():
         backfill_old_csv_flags()
     except Exception as e:
         logger.error(f"Error in automatic backfill: {e}")
+
+def record_ai_usage(provider: str):
+    """
+    Increments day-wise AI request counter in TiDB/MySQL upon successful AI API response.
+    Provider can be 'groq' or 'cloudflare'.
+    """
+    try:
+        conn = get_db_connection()
+        try:
+            with conn.cursor() as cursor:
+                if provider.lower() == "groq":
+                    cursor.execute("""
+                        INSERT INTO ai_usage (request_date, groq_count, cloudflare_count, total_count)
+                        VALUES (CURDATE(), 1, 0, 1)
+                        ON DUPLICATE KEY UPDATE
+                            groq_count = groq_count + 1,
+                            total_count = total_count + 1
+                    """)
+                elif provider.lower() == "cloudflare":
+                    cursor.execute("""
+                        INSERT INTO ai_usage (request_date, groq_count, cloudflare_count, total_count)
+                        VALUES (CURDATE(), 0, 1, 1)
+                        ON DUPLICATE KEY UPDATE
+                            cloudflare_count = cloudflare_count + 1,
+                            total_count = total_count + 1
+                    """)
+                logger.info(f"Recorded successful AI request for provider: {provider}")
+        finally:
+            conn.close()
+    except Exception as e:
+        logger.error(f"Failed to record AI usage in DB: {e}")
+
+def get_ai_usage_daywise():
+    """Fetches all day-wise AI request metrics sorted with the newest dates first."""
+    try:
+        conn = get_db_connection()
+        try:
+            with conn.cursor() as cursor:
+                cursor.execute("""
+                    SELECT 
+                        DATE_FORMAT(request_date, '%Y-%m-%d') AS date_str,
+                        request_date,
+                        groq_count,
+                        cloudflare_count,
+                        total_count,
+                        updated_at
+                    FROM ai_usage
+                    ORDER BY request_date DESC
+                """)
+                return cursor.fetchall() or []
+        finally:
+            conn.close()
+    except Exception as e:
+        logger.error(f"Failed to fetch AI usage daywise: {e}")
+        return []
+

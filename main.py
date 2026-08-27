@@ -10,6 +10,7 @@ import asyncio
 import threading
 import urllib.request
 from bot_system.db.connection import init_db
+from bot_system.services.backup_scheduler import start_backup_scheduler
 from bot_system.bot.telegram_bot import start_telegram_bot_app
 from bot_system.web.app import run_web_app
 
@@ -20,7 +21,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger("main")
 
-PING_URL = "https://laughing-octo-funicular-hz51.onrender.com/"
+PING_URL = "https://laughing-octo-funicular-76gs.onrender.com"
 
 def ping_worker_thread():
     logger.info(f"Starting keep-alive ping worker thread for {PING_URL} (interval: 45s)...")
@@ -41,6 +42,9 @@ async def main():
     logger.info("Initializing TiDB MySQL Database Schema...")
     init_db()
 
+    logger.info("Starting 3x daily GitHub backup scheduler...")
+    start_backup_scheduler()
+
     # Launch Simple HTML Web Server in daemon thread
     web_thread = threading.Thread(target=start_web_server_thread, daemon=True)
     web_thread.start()
@@ -59,7 +63,7 @@ async def main():
 
     logger.info("Standalone Python AI Worker & Simple HTML Web App are fully operational!")
 
-    # Keep application always running 
+    # Keep application running
     while True:
         await asyncio.sleep(3600)
 

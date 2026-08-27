@@ -17,6 +17,16 @@ app = Flask(__name__, template_folder="templates", static_folder="static")
 def index():
     return render_template("index.html")
 
+@app.route("/usage")
+def usage_page():
+    return render_template("usage.html")
+
+@app.route("/api/usage")
+def api_usage():
+    from bot_system.db.connection import get_ai_usage_daywise
+    records = get_ai_usage_daywise()
+    return jsonify({"success": True, "data": records})
+
 @app.route("/api/metrics")
 def api_metrics():
     return jsonify(get_dashboard_metrics())
@@ -473,6 +483,23 @@ def api_delete_submission():
             else:
                 cursor.execute("UPDATE submissions SET status = 'rejected' WHERE id = %s", (sub_id,))
         return jsonify({"success": True, "message": "Moved to bin successfully!"})
+    finally:
+        conn.close()
+
+@app.route("/api/scammer/delete-permanently", methods=["POST"])
+def api_delete_scammer_permanently():
+    data = request.json or {}
+    scammer_id = data.get("id")
+    if not scammer_id:
+        return jsonify({"success": False, "error": "Missing scammer id"}), 400
+
+    conn = get_db_connection()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute("DELETE FROM scammers WHERE id = %s", (scammer_id,))
+        return jsonify({"success": True, "message": f"Scammer entry #{scammer_id} permanently deleted!"})
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
     finally:
         conn.close()
 

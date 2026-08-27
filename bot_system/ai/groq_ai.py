@@ -1,6 +1,7 @@
 import logging
 from groq import Groq
 from bot_system.config import GROQ_API_KEYS, GROQ_MODEL
+from bot_system.db.connection import record_ai_usage
 
 logger = logging.getLogger(__name__)
 
@@ -35,6 +36,8 @@ def call_groq_ai_agent(messages: list, tools: list = None) -> dict:
                                 "arguments": tc.function.arguments
                             }
                         })
+                # Record successful Groq API request
+                record_ai_usage("groq")
                 return {
                     "content": msg.content or "",
                     "tool_calls": tool_calls

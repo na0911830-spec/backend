@@ -2,6 +2,7 @@ import requests
 import json
 import logging
 from bot_system.config import CF_ACCOUNT_ID, CF_API_TOKEN, CF_MODEL
+from bot_system.db.connection import record_ai_usage
 
 logger = logging.getLogger(__name__)
 
@@ -27,6 +28,8 @@ def call_cloudflare_ai_agent(messages: list, tools: list = None) -> dict:
         data = response.json()
         if data.get("success"):
             logger.info("Cloudflare Workers AI REST API request succeeded.")
+            # Record successful Cloudflare API request
+            record_ai_usage("cloudflare")
             result = data.get("result", {})
             if "choices" in result and len(result["choices"]) > 0:
                 msg = result["choices"][0]["message"]
